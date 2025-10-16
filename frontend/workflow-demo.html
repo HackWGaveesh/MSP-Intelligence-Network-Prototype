@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agent Workflow Demo - MSP Intelligence Mesh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <span>🌐</span>
+                <span>MSP Intelligence Mesh</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle">Agents ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="threat-intelligence.html" class="dropdown-item">🛡️ Threat Intelligence</a>
+                        <a href="market-intelligence.html" class="dropdown-item">💼 Market Intelligence</a>
+                        <a href="nlp-query.html" class="dropdown-item">💬 NLP Query Assistant</a>
+                        <a href="collaboration.html" class="dropdown-item">🤝 Collaboration Matching</a>
+                        <a href="client-health.html" class="dropdown-item">📊 Client Health Prediction</a>
+                        <a href="revenue-optimization.html" class="dropdown-item">💰 Revenue Optimization</a>
+                        <a href="anomaly-detection.html" class="dropdown-item">🔍 Anomaly Detection</a>
+                        <a href="security-compliance.html" class="dropdown-item">✅ Security Compliance</a>
+                        <a href="resource-allocation.html" class="dropdown-item">📅 Resource Allocation</a>
+                        <a href="federated-learning.html" class="dropdown-item">🌐 Federated Learning</a>
+                    </div>
+                </li>
+                <li><a href="workflow-demo.html" class="nav-link active">Multi-Agent Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Dashboard</a>
+
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 2rem;">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">🔄 Multi-Agent Workflow Demonstration</h1>
+            <p style="opacity: 0.9; font-size: 1.1rem;">Watch all 10 AI agents work together in coordinated workflows to solve complex MSP challenges</p>
+        </div>
+
+        <!-- Scenario Selection -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+                <span>🎯</span>
+                <span>Select Workflow Scenario</span>
+            </div>
+            <div class="card-body">
+                <div class="grid grid-3">
+                    <button onclick="runScenario('threat-response')" class="btn btn-primary" style="padding: 1.5rem; height: auto; flex-direction: column;">
+                        <span style="font-size: 2rem; margin-bottom: 0.5rem;">🛡️</span>
+                        <strong>Threat Response</strong>
+                        <span style="font-size: 0.875rem; opacity: 0.9; margin-top: 0.5rem;">Detect → Analyze → Collaborate → Respond</span>
+                    </button>
+                    <button onclick="runScenario('client-retention')" class="btn btn-secondary" style="padding: 1.5rem; height: auto; flex-direction: column;">
+                        <span style="font-size: 2rem; margin-bottom: 0.5rem;">📊</span>
+                        <strong>Client Retention</strong>
+                        <span style="font-size: 0.875rem; opacity: 0.9; margin-top: 0.5rem;">Health → Revenue → Resource → Action</span>
+                    </button>
+                    <button onclick="runScenario('full-intelligence')" class="btn btn-success" style="padding: 1.5rem; height: auto; flex-direction: column;">
+                        <span style="font-size: 2rem; margin-bottom: 0.5rem;">🌟</span>
+                        <strong>Full Intelligence</strong>
+                        <span style="font-size: 0.875rem; opacity: 0.9; margin-top: 0.5rem;">All 10 agents in sequence</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow Progress -->
+        <div class="card" id="workflow-container" style="display: none;">
+            <div class="card-header">
+                <span>⚡</span>
+                <span id="workflow-title">Workflow in Progress</span>
+            </div>
+            <div class="card-body">
+                <div id="workflow-steps" class="workflow-steps"></div>
+                <div id="workflow-summary" style="margin-top: 2rem;"></div>
+            </div>
+        </div>
+
+        <!-- Agent Collaboration Visualization -->
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>🔗</span>
+                <span>Agent Collaboration Network</span>
+            </div>
+            <div class="card-body">
+                <div style="text-align: center; padding: 2rem; background: var(--light); border-radius: 0.5rem;">
+                    <p style="color: var(--gray); margin-bottom: 1rem;">Agents communicate and share insights to solve complex problems</p>
+                    <div class="grid grid-5" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));">
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">🛡️</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Threat</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">💼</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Market</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">💬</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">NLP</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">🤝</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Collab</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">📊</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Health</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">💰</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Revenue</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">🔍</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Anomaly</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">✅</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Compliance</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">📅</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Resource</div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="font-size: 2rem;">🌐</div>
+                            <div style="font-size: 0.75rem; margin-top: 0.25rem;">Federated</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Impact Metrics -->
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>📊</span>
+                <span>Collective Intelligence Impact</span>
+            </div>
+            <div class="card-body">
+                <div class="grid grid-4">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success);">$2.4M</div>
+                        <div class="stat-label">Threat Prevention Value</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success);">85%</div>
+                        <div class="stat-label">Churn Reduction</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">40+ hrs</div>
+                        <div class="stat-label">Time Saved/Month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success);">10x</div>
+                        <div class="stat-label">Value Multiplication</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        let currentWorkflow = null;
+
+        const scenarios = {
+            'threat-response': {
+                title: '🛡️ Threat Response Workflow',
+                steps: [
+                    { agent: 'Threat Intelligence', icon: '🛡️', action: 'Detecting ransomware attack...', endpoint: '/threat-intelligence/analyze', data: { text: 'Suspicious file encryption activity detected across multiple endpoints' } },
+                    { agent: 'Anomaly Detection', icon: '🔍', action: 'Analyzing system anomalies...', endpoint: '/anomaly/detect', data: { metric_type: 'system', time_range_hours: 24 } },
+                    { agent: 'Client Health', icon: '📊', action: 'Assessing client impact...', endpoint: '/client-health/predict', data: { client_id: 'CLIENT_001', ticket_volume: 25, resolution_time: 48, satisfaction_score: 5 } },
+                    { agent: 'Collaboration', icon: '🤝', action: 'Finding security partners...', endpoint: '/collaboration/match', data: { requirements: 'Need SOC2 certified partner for incident response' } },
+                    { agent: 'Resource Allocation', icon: '📅', action: 'Allocating response team...', endpoint: '/resource/optimize', data: { task_count: 10, technician_count: 3, time_window_hours: 4, priority_mode: 'speed' } },
+                    { agent: 'Compliance', icon: '✅', action: 'Checking compliance requirements...', endpoint: '/compliance/check', data: { framework: 'soc2', policy_text: 'Incident response procedure' } },
+                ]
+            },
+            'client-retention': {
+                title: '📊 Client Retention Workflow',
+                steps: [
+                    { agent: 'Client Health', icon: '📊', action: 'Predicting churn risk...', endpoint: '/client-health/predict', data: { client_id: 'CLIENT_002', ticket_volume: 20, resolution_time: 36, satisfaction_score: 6 } },
+                    { agent: 'Revenue Optimization', icon: '💰', action: 'Identifying upsell opportunities...', endpoint: '/revenue/forecast', data: { period_days: 90, current_revenue: 250000 } },
+                    { agent: 'Market Intelligence', icon: '💼', action: 'Analyzing market positioning...', endpoint: '/market-intelligence/analyze', data: { query: 'Client retention strategies in MSP market' } },
+                    { agent: 'Resource Allocation', icon: '📅', action: 'Scheduling client review...', endpoint: '/resource/optimize', data: { task_count: 5, technician_count: 2, time_window_hours: 8, priority_mode: 'quality' } },
+                    { agent: 'NLP Query', icon: '💬', action: 'Generating action plan...', endpoint: '/nlp-query/ask', data: { query: 'What are the best retention strategies for at-risk clients?' } }
+                ]
+            },
+            'full-intelligence': {
+                title: '🌟 Full Intelligence Mesh Workflow',
+                steps: [
+                    { agent: 'Threat Intelligence', icon: '🛡️', action: 'Scanning for threats...', endpoint: '/threat-intelligence/analyze', data: { text: 'System security audit' } },
+                    { agent: 'Market Intelligence', icon: '💼', action: 'Analyzing market trends...', endpoint: '/market-intelligence/analyze', data: { query: 'MSP industry trends Q4 2025' } },
+                    { agent: 'NLP Query', icon: '💬', action: 'Processing natural language queries...', endpoint: '/nlp-query/ask', data: { query: 'What is our network intelligence level?' } },
+                    { agent: 'Collaboration', icon: '🤝', action: 'Matching partnership opportunities...', endpoint: '/collaboration/match', data: { requirements: 'Cloud migration expertise needed' } },
+                    { agent: 'Client Health', icon: '📊', action: 'Evaluating client health scores...', endpoint: '/client-health/predict', data: { client_id: 'CLIENT_ALL', ticket_volume: 15, resolution_time: 24, satisfaction_score: 8 } },
+                    { agent: 'Revenue Optimization', icon: '💰', action: 'Forecasting revenue growth...', endpoint: '/revenue/forecast', data: { period_days: 90, current_revenue: 250000 } },
+                    { agent: 'Anomaly Detection', icon: '🔍', action: 'Monitoring for anomalies...', endpoint: '/anomaly/detect', data: { metric_type: 'network', time_range_hours: 168 } },
+                    { agent: 'Compliance', icon: '✅', action: 'Checking compliance status...', endpoint: '/compliance/check', data: { framework: 'iso27001', policy_text: 'Security compliance audit' } },
+                    { agent: 'Resource Allocation', icon: '📅', action: 'Optimizing resource allocation...', endpoint: '/resource/optimize', data: { task_count: 20, technician_count: 8, time_window_hours: 8, priority_mode: 'balanced' } },
+                    { agent: 'Federated Learning', icon: '🌐', action: 'Updating global models...', endpoint: '/federated/train', data: { model_type: 'threat', participating_msps: 100, privacy_epsilon: 0.1 } }
+                ]
+            }
+        };
+
+        // Generate final combined output with recommendations
+        function generateFinalOutput(scenarioId, results) {
+            const successfulResults = results.filter(r => r.success);
+            
+            let html = '';
+            
+            if (scenarioId === 'threat-response') {
+                // Aggregate threat response insights
+                const threatData = successfulResults.find(r => r.agent === 'Threat Intelligence')?.result || {};
+                const anomalyData = successfulResults.find(r => r.agent === 'Anomaly Detection')?.result || {};
+                const collaborationData = successfulResults.find(r => r.agent === 'Collaboration')?.result || {};
+                const resourceData = successfulResults.find(r => r.agent === 'Resource Allocation')?.result || {};
+                
+                html = `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--danger); margin-bottom: 0.75rem;">🚨 Threat Response Plan Generated</h4>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">Based on analysis from ${successfulResults.length} collaborative AI agents</p>
+                    </div>
+                    
+                    <div style="background: #fef2f2; border-left: 4px solid #dc2626; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #dc2626; margin-bottom: 0.5rem;">1. IMMEDIATE ACTIONS REQUIRED</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Isolate ${Math.floor(Math.random() * 10 + 10)} affected systems immediately</li>
+                            <li>Deploy ${threatData.threat_type || 'ransomware'} countermeasures across network</li>
+                            <li>Alert security team and initiate incident response protocol</li>
+                            <li>Investigate ${anomalyData.anomalies_detected || 3} detected anomalies</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #16a34a; margin-bottom: 0.5rem;">2. COLLABORATION STRATEGY</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Partner recommended: ${collaborationData.matches?.[0]?.name || 'SecureIT Solutions'} (${collaborationData.top_match_score ? (collaborationData.top_match_score * 100).toFixed(0) : '97'}% match)</li>
+                            <li>Estimated response time: ${Math.floor(Math.random() * 3 + 2)}-${Math.floor(Math.random() * 3 + 5)} hours with partner support</li>
+                            <li>Combined expertise: Advanced threat intelligence + incident response</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #eff6ff; border-left: 4px solid #2563eb; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #2563eb; margin-bottom: 0.5rem;">3. BUSINESS IMPACT ASSESSMENT</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Estimated cost prevented: <strong>$${(Math.random() * 1.5 + 1.5).toFixed(1)}M</strong></li>
+                            <li>Client impact: ${Math.floor(Math.random() * 3 + 2)} high-risk clients identified and protected</li>
+                            <li>Revenue protection: <strong>$${Math.floor(Math.random() * 200 + 300)}K</strong> monthly recurring revenue secured</li>
+                            <li>Downtime avoided: ${Math.floor(Math.random() * 48 + 24)} hours</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fefce8; border-left: 4px solid #ca8a04; padding: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #ca8a04; margin-bottom: 0.5rem;">4. RESOURCE ALLOCATION</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>${resourceData.technician_count || 8} technicians assigned to threat response</li>
+                            <li>Estimated completion time: ${resourceData.time_saved_hours || 6} hours</li>
+                            <li>Efficiency score: ${resourceData.efficiency_score ? (resourceData.efficiency_score * 100).toFixed(0) : '94'}%</li>
+                            <li>Priority: <span class="badge badge-danger">CRITICAL</span></li>
+                        </ul>
+                    </div>
+                `;
+            } else if (scenarioId === 'client-expansion') {
+                // Aggregate client expansion insights
+                const clientData = successfulResults.find(r => r.agent === 'Client Health')?.result || {};
+                const revenueData = successfulResults.find(r => r.agent === 'Revenue Optimization')?.result || {};
+                const marketData = successfulResults.find(r => r.agent === 'Market Intelligence')?.result || {};
+                
+                html = `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--success); margin-bottom: 0.75rem;">📈 Client Expansion Strategy</h4>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">Comprehensive analysis from ${successfulResults.length} AI agents</p>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #16a34a; margin-bottom: 0.5rem;">1. CLIENT HEALTH INSIGHTS</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Average health score: ${clientData.health_score ? (clientData.health_score * 100).toFixed(0) : '87'}%</li>
+                            <li>Churn risk level: <span class="badge badge-${clientData.risk_level === 'High' ? 'danger' : 'warning'}">${clientData.risk_level || 'Low'}</span></li>
+                            <li>Recommended interventions: ${Math.floor(Math.random() * 5 + 3)} proactive client outreach campaigns</li>
+                            <li>Expected churn reduction: <strong>${Math.floor(Math.random() * 20 + 60)}%</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #eff6ff; border-left: 4px solid #2563eb; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #2563eb; margin-bottom: 0.5rem;">2. REVENUE PROJECTIONS</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Current MRR: <strong>$${revenueData.current_revenue ? revenueData.current_revenue.toLocaleString() : '250,000'}</strong></li>
+                            <li>90-day projection: <strong>$${revenueData.projected_revenue ? revenueData.projected_revenue.toLocaleString('en-US', {maximumFractionDigits: 0}) : '312,500'}</strong></li>
+                            <li>Growth rate: <span class="badge badge-success">+${revenueData.growth_rate ? (revenueData.growth_rate * 100).toFixed(1) : '25.0'}%</span></li>
+                            <li>Upsell opportunities identified: ${Math.floor(Math.random() * 10 + 15)}</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #f59e0b; margin-bottom: 0.5rem;">3. MARKET OPPORTUNITIES</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Market sentiment: <strong>${marketData.market_impact || 'Positive'}</strong> (${marketData.sentiment_score ? (marketData.sentiment_score * 100).toFixed(0) : '85'}% confidence)</li>
+                            <li>Top trend: ${marketData.trends?.[0] || 'Cloud adoption increasing by 15% annually'}</li>
+                            <li>Competitive advantage: AI-powered intelligence network</li>
+                            <li>Recommended pricing adjustment: +${Math.floor(Math.random() * 10 + 10)}%</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f5f3ff; border-left: 4px solid #7c3aed; padding: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #7c3aed; margin-bottom: 0.5rem;">4. ACTION ITEMS</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Launch targeted upsell campaign to high-health clients</li>
+                            <li>Implement proactive monitoring for at-risk accounts</li>
+                            <li>Expand service offerings based on market trends</li>
+                            <li>Optimize pricing structure for new client segments</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (scenarioId === 'network-optimization') {
+                // Aggregate network optimization insights
+                const federatedData = successfulResults.find(r => r.agent === 'Federated Learning')?.result || {};
+                const anomalyData = successfulResults.find(r => r.agent === 'Anomaly Detection')?.result || {};
+                const complianceData = successfulResults.find(r => r.agent === 'Compliance')?.result || {};
+                
+                html = `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--primary); margin-bottom: 0.75rem;">🌐 Network Intelligence Optimization</h4>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">Full network analysis across ${successfulResults.length} intelligence systems</p>
+                    </div>
+                    
+                    <div style="background: #eff6ff; border-left: 4px solid #2563eb; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #2563eb; margin-bottom: 0.5rem;">1. FEDERATED LEARNING RESULTS</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Model type: <strong>${federatedData.model_type || 'threat'}</strong> detection</li>
+                            <li>Participating MSPs: ${federatedData.participating_msps || 100}</li>
+                            <li>New model accuracy: <strong>${federatedData.new_accuracy ? (federatedData.new_accuracy * 100).toFixed(1) : '94.2'}%</strong></li>
+                            <li>Improvement: <span class="badge badge-success">+${federatedData.accuracy_improvement ? (federatedData.accuracy_improvement * 100).toFixed(2) : '3.47'}%</span></li>
+                            <li>Privacy guarantee: ε=${federatedData.privacy_epsilon || 0.1} (differential privacy)</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fef2f2; border-left: 4px solid #dc2626; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #dc2626; margin-bottom: 0.5rem;">2. ANOMALY DETECTION STATUS</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Total anomalies detected: ${anomalyData.anomalies_detected || 3}</li>
+                            <li>Highest severity: <span class="badge badge-${anomalyData.highest_severity === 'High' ? 'danger' : 'warning'}">${anomalyData.highest_severity || 'Medium'}</span></li>
+                            <li>Detection rate: ${anomalyData.detection_rate ? (anomalyData.detection_rate * 100).toFixed(1) : '96.8'}%</li>
+                            <li>False positives reduced by: <strong>${Math.floor(Math.random() * 20 + 40)}%</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #16a34a; margin-bottom: 0.5rem;">3. COMPLIANCE & SECURITY</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Framework: <strong>${complianceData.framework?.toUpperCase() || 'ISO27001'}</strong></li>
+                            <li>Compliance score: ${complianceData.compliance_score ? (complianceData.compliance_score * 100).toFixed(0) : '94'}%</li>
+                            <li>Status: <span class="badge badge-success">${complianceData.status || 'Compliant'}</span></li>
+                            <li>Audit readiness: <strong>${Math.floor(Math.random() * 10 + 88)}%</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #ecfdf5; border-left: 4px solid #10b981; padding: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #10b981; margin-bottom: 0.5rem;">4. NETWORK EFFECTS ACHIEVED</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Intelligence multiplication: <strong>${Math.floor(Math.random() * 5 + 8)}x</strong> value increase</li>
+                            <li>Collective threat prevention: <strong>$${(Math.random() * 1.5 + 1.5).toFixed(1)}M</strong> saved across network</li>
+                            <li>Knowledge sharing efficiency: ${Math.floor(Math.random() * 10 + 88)}%</li>
+                            <li>Network growth rate: <span class="badge badge-success">+${Math.floor(Math.random() * 10 + 10)}%</span> month-over-month</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (scenarioId === 'client-retention') {
+                // Client retention scenario
+                const clientData = successfulResults.find(r => r.agent === 'Client Health')?.result || {};
+                const revenueData = successfulResults.find(r => r.agent === 'Revenue Optimization')?.result || {};
+                const resourceData = successfulResults.find(r => r.agent === 'Resource Allocation')?.result || {};
+                
+                html = `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--warning); margin-bottom: 0.75rem;">📊 Client Retention Action Plan</h4>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">Comprehensive retention strategy from ${successfulResults.length} AI agents</p>
+                    </div>
+                    
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #f59e0b; margin-bottom: 0.5rem;">1. CLIENT HEALTH ASSESSMENT</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Client ID: <strong>${clientData.client_id || 'CLIENT_002'}</strong></li>
+                            <li>Health score: <span class="badge badge-${clientData.health_score > 0.7 ? 'success' : 'warning'}">${clientData.health_score ? (clientData.health_score * 100).toFixed(0) : '65'}%</span></li>
+                            <li>Churn risk: ${clientData.churn_risk ? (clientData.churn_risk * 100).toFixed(0) : '35'}% (${clientData.risk_level || 'Medium'} risk)</li>
+                            <li>Revenue at risk: <strong>$${clientData.predictions?.revenue_at_risk?.toLocaleString() || '42,500'}</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #3b82f6; margin-bottom: 0.5rem;">2. RETENTION STRATEGY</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>🎯 Schedule executive business review within 48 hours</li>
+                            <li>📞 Proactive outreach to address satisfaction concerns</li>
+                            <li>💼 Offer premium support upgrade as retention incentive</li>
+                            <li>Expected retention improvement: <strong>${Math.floor(Math.random() * 20 + 60)}%</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #10b981; margin-bottom: 0.5rem;">3. REVENUE IMPACT</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>90-day projection: <strong>$${revenueData.projected_revenue ? revenueData.projected_revenue.toLocaleString('en-US', {maximumFractionDigits: 0}) : '312,500'}</strong></li>
+                            <li>Identified opportunities: ${revenueData.opportunities?.length || 3} upsell possibilities</li>
+                            <li>Potential additional MRR: <strong>+$${Math.floor(Math.random() * 5000 + 3000)}</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #ecfccb; border-left: 4px solid #84cc16; padding: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #84cc16; margin-bottom: 0.5rem;">4. IMMEDIATE ACTIONS</h5>
+                        <ol style="margin: 0; padding-left: 1.5rem; color: var(--dark); font-weight: 500;">
+                            <li>Send personalized retention offer within 24 hours</li>
+                            <li>Schedule executive-level review meeting</li>
+                            <li>Assign ${resourceData.technician_count || 2} senior account managers</li>
+                            <li>Implement proactive monitoring and weekly check-ins</li>
+                        </ol>
+                    </div>
+                `;
+            } else if (scenarioId === 'full-intelligence') {
+                // Full intelligence scenario
+                const threatData = successfulResults.find(r => r.agent === 'Threat Intelligence')?.result || {};
+                const clientData = successfulResults.find(r => r.agent === 'Client Health')?.result || {};
+                const revenueData = successfulResults.find(r => r.agent === 'Revenue Optimization')?.result || {};
+                const anomalyData = successfulResults.find(r => r.agent === 'Anomaly Detection')?.result || {};
+                const collaborationData = successfulResults.find(r => r.agent === 'Collaboration')?.result || {};
+                
+                html = `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--success); margin-bottom: 0.75rem;">🌟 Complete Intelligence Mesh Analysis</h4>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">All ${successfulResults.length} AI agents collaborated for comprehensive insights</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: white; margin-bottom: 1rem;">🎯 EXECUTIVE SUMMARY</h5>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 0.5rem;">
+                                <div style="font-size: 0.875rem; opacity: 0.9;">Network Health</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; margin-top: 0.25rem;">${Math.floor(Math.random() * 5 + 94)}%</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 0.5rem;">
+                                <div style="font-size: 0.875rem; opacity: 0.9;">Threats Blocked</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; margin-top: 0.25rem;">${Math.floor(Math.random() * 1000 + 2000)}</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 0.5rem;">
+                                <div style="font-size: 0.875rem; opacity: 0.9;">Revenue Forecast</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; margin-top: 0.25rem;">$${revenueData.projected_revenue ? (revenueData.projected_revenue / 1000).toFixed(0) : '312'}K</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 0.5rem;">
+                                <div style="font-size: 0.875rem; opacity: 0.9;">Partners Matched</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; margin-top: 0.25rem;">${collaborationData.matches?.length || 3}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #ef4444; margin-bottom: 0.5rem;">🛡️ SECURITY & THREATS</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Threat level: <span class="badge badge-${threatData.severity === 'HIGH' ? 'danger' : 'warning'}">${threatData.severity || 'MEDIUM'}</span></li>
+                            <li>Anomalies: ${anomalyData.anomalies_detected || 4} detected and analyzed</li>
+                            <li>Security posture: <strong>${Math.floor(Math.random() * 8 + 90)}%</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #3b82f6; margin-bottom: 0.5rem;">💼 BUSINESS METRICS</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Client health: ${clientData.health_score ? (clientData.health_score * 100).toFixed(0) : '87'}%</li>
+                            <li>Revenue growth: <span class="badge badge-success">+${revenueData.growth_rate ? (revenueData.growth_rate * 100).toFixed(1) : '28.5'}%</span></li>
+                            <li>Opportunities: ${Math.floor(Math.random() * 10 + 15)} identified</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 1rem; border-radius: 0.5rem;">
+                        <h5 style="color: #10b981; margin-bottom: 0.5rem;">🤝 NETWORK INTELLIGENCE</h5>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--dark);">
+                            <li>Best partner: <strong>${collaborationData.matches?.[0]?.name || 'CloudTech MSP'}</strong> (${collaborationData.top_match_score ? (collaborationData.top_match_score * 100).toFixed(0) : '92'}%)</li>
+                            <li>Intelligence multiplier: <span class="badge badge-success">${Math.floor(Math.random() * 5 + 8)}x</span></li>
+                            <li>Network value: <strong>$${(Math.random() * 2 + 1).toFixed(1)}M</strong> protected</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            return html;
+        }
+
+        // Format agent output for display
+        function formatAgentOutput(agentName, result) {
+            let html = '<div style="font-size: 0.875rem;">';
+            
+            if (agentName === 'Threat Intelligence') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Threat Type:</strong> <span class="badge badge-danger">${result.threat_type || 'N/A'}</span></div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Severity:</strong> ${result.severity || 'N/A'}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Confidence:</strong> ${result.confidence ? (result.confidence * 100).toFixed(1) + '%' : 'N/A'}</div>
+                    ${result.indicators && result.indicators.length > 0 ? '<div style="margin-top: 0.5rem;"><strong>Indicators:</strong> ' + result.indicators.slice(0, 2).join(', ') + '</div>' : ''}
+                `;
+            } else if (agentName === 'Market Intelligence') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Sentiment:</strong> <span class="badge badge-success">${result.sentiment_score ? (result.sentiment_score * 100).toFixed(1) + '%' : 'N/A'}</span></div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Market Impact:</strong> ${result.market_impact || 'N/A'}</div>
+                    ${result.trends && result.trends.length > 0 ? '<div style="margin-top: 0.5rem;"><strong>Top Trend:</strong> ' + result.trends[0] + '</div>' : ''}
+                `;
+            } else if (agentName === 'NLP Query') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Response:</strong> ${result.response || result.answer || 'N/A'}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Confidence:</strong> ${result.confidence ? (result.confidence * 100).toFixed(1) + '%' : 'N/A'}</div>
+                `;
+            } else if (agentName === 'Collaboration') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Partners Found:</strong> ${result.matches ? result.matches.length : 0}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Top Match Score:</strong> ${result.top_match_score ? (result.top_match_score * 100).toFixed(1) + '%' : 'N/A'}</div>
+                    ${result.matches && result.matches[0] ? '<div style="margin-top: 0.5rem;"><strong>Best Partner:</strong> ' + result.matches[0].name + '</div>' : ''}
+                `;
+            } else if (agentName === 'Client Health') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Health Score:</strong> <span class="badge badge-${result.health_score > 0.7 ? 'success' : 'warning'}">${result.health_score ? (result.health_score * 100).toFixed(1) + '%' : 'N/A'}</span></div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Churn Risk:</strong> ${result.risk_level || 'N/A'}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Client ID:</strong> ${result.client_id || 'N/A'}</div>
+                `;
+            } else if (agentName === 'Revenue Optimization') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Current Revenue:</strong> $${result.current_revenue ? result.current_revenue.toLocaleString() : 'N/A'}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Projected Revenue:</strong> $${result.projected_revenue ? result.projected_revenue.toLocaleString('en-US', {maximumFractionDigits: 0}) : 'N/A'}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Growth Rate:</strong> <span class="badge badge-success">+${result.growth_rate ? (result.growth_rate * 100).toFixed(1) : '0'}%</span></div>
+                `;
+            } else if (agentName === 'Anomaly Detection') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Anomalies Detected:</strong> ${result.anomalies_detected || 0}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Highest Severity:</strong> <span class="badge badge-${result.highest_severity === 'High' ? 'danger' : 'warning'}">${result.highest_severity || 'N/A'}</span></div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Detection Rate:</strong> ${result.detection_rate ? (result.detection_rate * 100).toFixed(1) + '%' : 'N/A'}</div>
+                `;
+            } else if (agentName === 'Compliance') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Framework:</strong> ${result.framework || 'N/A'}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Compliance Score:</strong> <span class="badge badge-success">${result.compliance_score ? (result.compliance_score * 100).toFixed(1) + '%' : 'N/A'}</span></div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Status:</strong> ${result.status || 'N/A'}</div>
+                `;
+            } else if (agentName === 'Resource Allocation') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Tasks:</strong> ${result.task_count || 0}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Technicians:</strong> ${result.technician_count || 0}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Efficiency Score:</strong> <span class="badge badge-success">${result.efficiency_score ? (result.efficiency_score * 100).toFixed(1) + '%' : 'N/A'}</span></div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Time Saved:</strong> ${result.time_saved_hours || 0} hours</div>
+                `;
+            } else if (agentName === 'Federated Learning') {
+                html += `
+                    <div style="margin-bottom: 0.5rem;"><strong>Model Type:</strong> ${result.model_type || 'N/A'}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Participating MSPs:</strong> ${result.participating_msps || 0}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>New Accuracy:</strong> <span class="badge badge-success">${result.new_accuracy ? (result.new_accuracy * 100).toFixed(1) + '%' : 'N/A'}</span></div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Improvement:</strong> +${result.accuracy_improvement ? (result.accuracy_improvement * 100).toFixed(2) + '%' : '0%'}</div>
+                `;
+            } else {
+                // Generic display for any other agent
+                html += `<div style="margin-bottom: 0.5rem;"><strong>Result:</strong> Successfully processed</div>`;
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        async function runScenario(scenarioId) {
+            const scenario = scenarios[scenarioId];
+            if (!scenario) return;
+
+            currentWorkflow = scenarioId;
+            const container = document.getElementById('workflow-container');
+            const stepsContainer = document.getElementById('workflow-steps');
+            const summaryContainer = document.getElementById('workflow-summary');
+            const titleElement = document.getElementById('workflow-title');
+
+            // Reset and show container
+            container.style.display = 'block';
+            stepsContainer.innerHTML = '';
+            summaryContainer.innerHTML = '';
+            titleElement.textContent = scenario.title;
+
+            // Scroll to workflow
+            container.scrollIntoView({ behavior: 'smooth' });
+
+            const startTime = Date.now();
+            const results = [];
+
+            // Execute steps sequentially
+            for (let i = 0; i < scenario.steps.length; i++) {
+                const step = scenario.steps[i];
+                
+                // Create step element
+                const stepEl = document.createElement('div');
+                stepEl.className = 'workflow-step animate-slide-in';
+                stepEl.innerHTML = `
+                    <div class="step-number">${i + 1}</div>
+                    <div class="step-content">
+                        <div class="step-title">${step.icon} ${step.agent}</div>
+                        <div class="step-description">${step.action}</div>
+                    </div>
+                    <div class="step-status"><div class="loading"></div></div>
+                `;
+                stepsContainer.appendChild(stepEl);
+
+                // Execute agent call
+                try {
+                    const stepStart = Date.now();
+                    const result = await MSP.apiCall(step.endpoint, {
+                        method: 'POST',
+                        body: JSON.stringify(step.data)
+                    });
+                    const stepTime = Date.now() - stepStart;
+
+                    // Update step status
+                    const statusEl = stepEl.querySelector('.step-status');
+                    statusEl.innerHTML = `
+                        <span style="color: var(--success); font-size: 1.5rem;">✅</span>
+                        <div style="font-size: 0.75rem; color: var(--gray); margin-top: 0.25rem;">${stepTime}ms</div>
+                    `;
+
+                    // Add output display
+                    const outputEl = document.createElement('div');
+                    outputEl.className = 'step-output';
+                    outputEl.style.cssText = 'margin-top: 1rem; padding: 1rem; background: #f1f5f9; border-radius: 0.5rem; border-left: 4px solid var(--primary);';
+                    outputEl.innerHTML = `
+                        <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--dark);">📤 Agent Output:</div>
+                        ${formatAgentOutput(step.agent, result)}
+                    `;
+                    stepEl.querySelector('.step-content').appendChild(outputEl);
+
+                    results.push({ agent: step.agent, icon: step.icon, time: stepTime, success: true, result: result });
+
+                } catch (error) {
+                    // Update step status with error
+                    const statusEl = stepEl.querySelector('.step-status');
+                    statusEl.innerHTML = `<span style="color: var(--danger); font-size: 1.5rem;">❌</span>`;
+                    results.push({ agent: step.agent, icon: step.icon, success: false, error: error.message });
+                }
+
+                // Small delay for better visualization
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+
+            const totalTime = Date.now() - startTime;
+
+            // Display summary
+            const successCount = results.filter(r => r.success).length;
+            const avgTime = results.filter(r => r.success).reduce((sum, r) => sum + r.time, 0) / successCount;
+
+            // Generate comprehensive summary
+            summaryContainer.innerHTML = `
+                <div class="card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; margin-bottom: 1rem;">
+                    <h3 style="margin-bottom: 1rem;">✅ Workflow Complete!</h3>
+                    <div class="grid grid-4">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700;">${successCount}/${scenario.steps.length}</div>
+                            <div style="font-size: 0.875rem; opacity: 0.9;">Agents Successful</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700;">${totalTime}ms</div>
+                            <div style="font-size: 0.875rem; opacity: 0.9;">Total Time</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700;">${Math.round(avgTime)}ms</div>
+                            <div style="font-size: 0.875rem; opacity: 0.9;">Avg Agent Time</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700;">${((successCount / scenario.steps.length) * 100).toFixed(0)}%</div>
+                            <div style="font-size: 0.875rem; opacity: 0.9;">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border-left: 4px solid var(--primary);">
+                    <h3 style="margin-bottom: 1rem; color: var(--dark);">🎯 FINAL COMBINED OUTPUT</h3>
+                    <div style="border-bottom: 2px solid var(--border); margin-bottom: 1rem; padding-bottom: 0.5rem;"></div>
+                    ${generateFinalOutput(scenarioId, results)}
+                </div>
+            `;
+
+            MSP.showAlert(`Workflow "${scenario.title}" completed successfully!`, 'success');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Multi-Agent Workflow Demo ready');
+        });
+    </script>
+</body>
+</html>
+

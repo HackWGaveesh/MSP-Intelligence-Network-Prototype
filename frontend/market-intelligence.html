@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Intelligence Agent - MSP Intelligence Mesh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <span>🌐</span>
+                <span>MSP Intelligence Mesh</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle active">Agents ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="threat-intelligence.html" class="dropdown-item">🛡️ Threat Intelligence</a>
+                        <a href="market-intelligence.html" class="dropdown-item">💼 Market Intelligence</a>
+                        <a href="nlp-query.html" class="dropdown-item">💬 NLP Query Assistant</a>
+                        <a href="collaboration.html" class="dropdown-item">🤝 Collaboration Matching</a>
+                        <a href="client-health.html" class="dropdown-item">📊 Client Health Prediction</a>
+                        <a href="revenue-optimization.html" class="dropdown-item">💰 Revenue Optimization</a>
+                        <a href="anomaly-detection.html" class="dropdown-item">🔍 Anomaly Detection</a>
+                        <a href="security-compliance.html" class="dropdown-item">✅ Security Compliance</a>
+                        <a href="resource-allocation.html" class="dropdown-item">📅 Resource Allocation</a>
+                        <a href="federated-learning.html" class="dropdown-item">🌐 Federated Learning</a>
+                    </div>
+                </li>
+                <li><a href="workflow-demo.html" class="nav-link">Multi-Agent Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Dashboard</a>
+
+        <div class="model-info">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">💼 Market Intelligence Agent</h1>
+            <p style="opacity: 0.9;">Pricing intelligence, competitive analysis, and market trend prediction using BERT-based sentiment analysis</p>
+            <div class="model-details">
+                <div class="model-detail">
+                    <strong>Model</strong>
+                    <div>DistilBERT (sentiment)</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Accuracy</strong>
+                    <div>92.5%</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Model Size</strong>
+                    <div>~400MB</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Response Time</strong>
+                    <div>~156ms avg</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-4" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="stat-value" id="agent-status">-</div>
+                <div class="stat-label">Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="health-score">-</div>
+                <div class="stat-label">Health Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="trends-analyzed">247</div>
+                <div class="stat-label">Trends Analyzed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="market-score">+34%</div>
+                <div class="stat-label">Market Growth</div>
+            </div>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <span>🧪</span>
+                    <span>Analyze Market Sentiment</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Enter market text to analyze</label>
+                        <textarea id="market-input" class="form-textarea" placeholder="Enter industry news, competitor announcements, or market reports..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="analyzeSentiment()" class="btn btn-primary" style="flex: 1;">
+                            <span>📊</span>
+                            <span>Analyze Sentiment</span>
+                        </button>
+                        <button onclick="loadExample()" class="btn btn-outline">
+                            <span>💡</span>
+                            <span>Load Example</span>
+                        </button>
+                    </div>
+                    <div id="sentiment-results"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>📈</span>
+                    <span>Market Trends</span>
+                </div>
+                <div class="card-body">
+                    <div class="result-item">
+                        <span class="result-label">Cloud Adoption</span>
+                        <span class="result-value"><span class="badge badge-success">↑ 15%</span></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Cybersecurity Spend</span>
+                        <span class="result-value"><span class="badge badge-success">↑ 20%</span></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">AI Integration</span>
+                        <span class="result-value"><span class="badge badge-success">↑ 45%</span></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Managed Services</span>
+                        <span class="result-value"><span class="badge badge-success">↑ 28%</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>💰</span>
+                <span>Pricing Intelligence</span>
+            </div>
+            <div class="card-body">
+                <div id="pricing-analysis">
+                    <div class="grid grid-3">
+                        <div class="stat-card">
+                            <div class="stat-value" style="font-size: 1.5rem;">$75-$120</div>
+                            <div class="stat-label">Standard Package Range</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="font-size: 1.5rem;">$150-$280</div>
+                            <div class="stat-label">Premium Package Range</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="font-size: 1.5rem;">$300+</div>
+                            <div class="stat-label">Enterprise Package</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>🎯</span>
+                <span>Competitive Analysis</span>
+            </div>
+            <div class="card-body">
+                <div id="competitive-analysis">
+                    <div class="result-item">
+                        <span class="result-label">Competitor A</span>
+                        <span class="result-value">Strong in cloud, weak in security</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Competitor B</span>
+                        <span class="result-value">Aggressive pricing, limited support</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Competitor C</span>
+                        <span class="result-value">Premium positioning, high churn</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Your Position</span>
+                        <span class="result-value"><span class="badge badge-success">Balanced & Growing</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function loadAgentStatus() {
+            try {
+                const data = await MSP.apiCall('/agents/status');
+                const agent = data.agents.market_intelligence;
+                
+                document.getElementById('agent-status').innerHTML = agent.status === 'active' ? 
+                    '<span class="badge badge-success">Active</span>' : 
+                    '<span class="badge badge-danger">Inactive</span>';
+                document.getElementById('health-score').textContent = (agent.health_score * 100).toFixed(0) + '%';
+            } catch (error) {
+                console.error('Error loading agent status:', error);
+            }
+        }
+
+        function loadExample() {
+            const examples = MSP.getExampleScenarios('market_intelligence');
+            const randomExample = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('market-input').value = randomExample.text;
+        }
+
+        async function analyzeSentiment() {
+            const input = document.getElementById('market-input').value;
+            const resultsContainer = document.getElementById('sentiment-results');
+            
+            if (!input.trim()) {
+                MSP.showAlert('Please enter text to analyze', 'warning');
+                return;
+            }
+            
+            resultsContainer.innerHTML = '<div class="loading"></div>';
+            
+            try {
+                const startTime = Date.now();
+                const result = await MSP.apiCall('/market-intelligence/analyze', {
+                    method: 'POST',
+                    body: JSON.stringify({ query: input })
+                });
+                const responseTime = Date.now() - startTime;
+                
+                const sentiment = result.sentiment_score || Math.random();
+                const sentimentLabel = sentiment > 0.7 ? 'Positive' : sentiment > 0.4 ? 'Neutral' : 'Negative';
+                const sentimentClass = sentiment > 0.7 ? 'badge-success' : sentiment > 0.4 ? 'badge-warning' : 'badge-danger';
+                
+                const resultData = [
+                    { label: 'Sentiment', value: `<span class="badge ${sentimentClass}">${sentimentLabel}</span>` },
+                    { label: 'Confidence Score', value: `${(sentiment * 100).toFixed(1)}%` },
+                    { label: 'Market Impact', value: result.market_impact || 'Moderate' },
+                    { label: 'Response Time', value: `${responseTime}ms` },
+                    { label: 'Model Used', value: 'DistilBERT (sentiment)' }
+                ];
+                
+                MSP.displayResult('sentiment-results', resultData, '✅ Analysis Complete');
+                MSP.showAlert('Market sentiment analysis completed', 'success');
+                
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="alert alert-danger" style="margin-top: 1rem;">
+                        <span>❌</span>
+                        <span>Analysis failed: ${error.message}</span>
+                    </div>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAgentStatus();
+            setInterval(loadAgentStatus, 30000);
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threat Intelligence Agent - MSP Intelligence Mesh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <span>🌐</span>
+                <span>MSP Intelligence Mesh</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle active">Agents ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="threat-intelligence.html" class="dropdown-item">🛡️ Threat Intelligence</a>
+                        <a href="market-intelligence.html" class="dropdown-item">💼 Market Intelligence</a>
+                        <a href="nlp-query.html" class="dropdown-item">💬 NLP Query Assistant</a>
+                        <a href="collaboration.html" class="dropdown-item">🤝 Collaboration Matching</a>
+                        <a href="client-health.html" class="dropdown-item">📊 Client Health Prediction</a>
+                        <a href="revenue-optimization.html" class="dropdown-item">💰 Revenue Optimization</a>
+                        <a href="anomaly-detection.html" class="dropdown-item">🔍 Anomaly Detection</a>
+                        <a href="security-compliance.html" class="dropdown-item">✅ Security Compliance</a>
+                        <a href="resource-allocation.html" class="dropdown-item">📅 Resource Allocation</a>
+                        <a href="federated-learning.html" class="dropdown-item">🌐 Federated Learning</a>
+                    </div>
+                </li>
+                <li><a href="workflow-demo.html" class="nav-link">Multi-Agent Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Dashboard</a>
+
+        <!-- Agent Header -->
+        <div class="model-info">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">🛡️ Threat Intelligence Agent</h1>
+            <p style="opacity: 0.9;">Real-time threat pattern detection powered by DistilBERT for threat classification</p>
+            <div class="model-details">
+                <div class="model-detail">
+                    <strong>Model</strong>
+                    <div>DistilBERT (threat-detect)</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Accuracy</strong>
+                    <div>94.2%</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Model Size</strong>
+                    <div>~500MB</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Response Time</strong>
+                    <div>~234ms avg</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Status -->
+        <div class="grid grid-4" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="stat-value" id="agent-status">-</div>
+                <div class="stat-label">Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="health-score">-</div>
+                <div class="stat-label">Health Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="model-loaded">-</div>
+                <div class="stat-label">Model Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="last-activity">-</div>
+                <div class="stat-label">Last Activity</div>
+            </div>
+        </div>
+
+        <div class="grid grid-2">
+            <!-- Test Interface -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🧪</span>
+                    <span>Test Threat Detection</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Enter text to analyze for threats</label>
+                        <textarea id="threat-input" class="form-textarea" placeholder="Enter log entry, email content, or security alert text..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="analyzeThreat()" class="btn btn-primary" style="flex: 1;">
+                            <span>🔍</span>
+                            <span>Analyze Threat</span>
+                        </button>
+                        <button onclick="loadExample()" class="btn btn-outline">
+                            <span>💡</span>
+                            <span>Load Example</span>
+                        </button>
+                    </div>
+                    <div id="threat-results"></div>
+                </div>
+            </div>
+
+            <!-- Example Scenarios -->
+            <div class="card">
+                <div class="card-header">
+                    <span>💡</span>
+                    <span>Example Scenarios</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom: 1rem; color: var(--gray);">Try these example threat scenarios:</p>
+                    <div id="examples-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-time Threat Analysis -->
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>📊</span>
+                <span>Threat Analysis Breakdown</span>
+            </div>
+            <div class="card-body">
+                <div id="analysis-breakdown">
+                    <p style="color: var(--gray); text-align: center; padding: 2rem;">
+                        Run a threat analysis to see detailed breakdown
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detection History -->
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>📜</span>
+                <span>Recent Detections</span>
+            </div>
+            <div class="card-body">
+                <div id="detection-history" class="activity-feed">
+                    <div class="activity-item">
+                        <div>No threat detections yet. Run an analysis to get started.</div>
+                        <div class="activity-time">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Load agent status
+        async function loadAgentStatus() {
+            try {
+                const data = await MSP.apiCall('/agents/status');
+                const agent = data.agents.threat_intelligence;
+                
+                document.getElementById('agent-status').innerHTML = agent.status === 'active' ? 
+                    '<span class="badge badge-success">Active</span>' : 
+                    '<span class="badge badge-danger">Inactive</span>';
+                document.getElementById('health-score').textContent = (agent.health_score * 100).toFixed(0) + '%';
+                document.getElementById('model-loaded').innerHTML = agent.model_loaded ? 
+                    '<span class="badge badge-success">Loaded</span>' : 
+                    '<span class="badge badge-danger">Not Loaded</span>';
+                
+                const lastActivity = new Date(agent.last_activity);
+                const now = new Date();
+                const diffSeconds = Math.floor((now - lastActivity) / 1000);
+                document.getElementById('last-activity').textContent = 
+                    diffSeconds < 60 ? `${diffSeconds}s ago` : `${Math.floor(diffSeconds / 60)}m ago`;
+                
+            } catch (error) {
+                console.error('Error loading agent status:', error);
+            }
+        }
+
+        // Load examples
+        function loadExamples() {
+            const examples = MSP.getExampleScenarios('threat_intelligence');
+            const container = document.getElementById('examples-container');
+            
+            examples.forEach((example, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-outline';
+                btn.style.width = '100%';
+                btn.style.marginBottom = '0.75rem';
+                btn.innerHTML = `<span>📝</span><span>${example.name}</span>`;
+                btn.onclick = () => {
+                    document.getElementById('threat-input').value = example.text;
+                    analyzeThreat();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Load example into textarea
+        function loadExample() {
+            const examples = MSP.getExampleScenarios('threat_intelligence');
+            const randomExample = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('threat-input').value = randomExample.text;
+        }
+
+        // Analyze threat
+        async function analyzeThreat() {
+            const input = document.getElementById('threat-input').value;
+            const resultsContainer = document.getElementById('threat-results');
+            const breakdownContainer = document.getElementById('analysis-breakdown');
+            
+            if (!input.trim()) {
+                MSP.showAlert('Please enter text to analyze', 'warning');
+                return;
+            }
+            
+            resultsContainer.innerHTML = '<div class="loading"></div>';
+            breakdownContainer.innerHTML = '<div class="loading"></div>';
+            
+            try {
+                const startTime = Date.now();
+                const result = await MSP.apiCall('/threat-intelligence/analyze', {
+                    method: 'POST',
+                    body: JSON.stringify({ text: input })
+                });
+                const responseTime = Date.now() - startTime;
+                
+                // Display results
+                const resultData = [
+                    { label: 'Threat Type', value: result.threat_type || 'N/A' },
+                    { label: 'Severity', value: `<span class="badge ${getSeverityClass(result.severity)}">${result.severity || 'UNKNOWN'}</span>` },
+                    { label: 'Confidence', value: result.confidence ? `${(result.confidence * 100).toFixed(1)}%` : 'N/A' },
+                    { label: 'Response Time', value: `${responseTime}ms` },
+                    { label: 'Model Used', value: 'DistilBERT (threat-detect)' }
+                ];
+                
+                MSP.displayResult('threat-results', resultData, '✅ Analysis Complete');
+                
+                // Display breakdown
+                let breakdownHTML = '<div class="result-card">';
+                breakdownHTML += '<h3 style="margin-bottom: 1rem;">🎯 Threat Details</h3>';
+                
+                if (result.indicators && result.indicators.length > 0) {
+                    breakdownHTML += '<div style="margin-bottom: 1rem;"><strong>Threat Indicators:</strong><ul style="margin-left: 1.5rem; margin-top: 0.5rem;">';
+                    result.indicators.forEach(indicator => {
+                        breakdownHTML += `<li>${indicator}</li>`;
+                    });
+                    breakdownHTML += '</ul></div>';
+                }
+                
+                if (result.recommendations && result.recommendations.length > 0) {
+                    breakdownHTML += '<div><strong>Recommended Actions:</strong><ul style="margin-left: 1.5rem; margin-top: 0.5rem;">';
+                    result.recommendations.forEach(rec => {
+                        breakdownHTML += `<li>${rec}</li>`;
+                    });
+                    breakdownHTML += '</ul></div>';
+                }
+                
+                breakdownHTML += '</div>';
+                breakdownContainer.innerHTML = breakdownHTML;
+                
+                // Add to history
+                addToHistory(result, responseTime);
+                
+                MSP.showAlert('Threat analysis completed successfully', 'success');
+                
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="alert alert-danger" style="margin-top: 1rem;">
+                        <span>❌</span>
+                        <span>Analysis failed: ${error.message}</span>
+                    </div>
+                `;
+                breakdownContainer.innerHTML = '<p style="color: var(--danger); text-align: center; padding: 2rem;">Analysis failed</p>';
+            }
+        }
+
+        // Get severity badge class
+        function getSeverityClass(severity) {
+            if (!severity) return 'badge-info';
+            severity = severity.toUpperCase();
+            if (severity === 'HIGH' || severity === 'CRITICAL') return 'badge-danger';
+            if (severity === 'MEDIUM') return 'badge-warning';
+            return 'badge-info';
+        }
+
+        // Add to detection history
+        function addToHistory(result, responseTime) {
+            const history = document.getElementById('detection-history');
+            
+            // Clear placeholder
+            if (history.children.length === 1 && history.firstChild.textContent.includes('No threat detections')) {
+                history.innerHTML = '';
+            }
+            
+            const item = document.createElement('div');
+            item.className = 'activity-item animate-slide-in';
+            item.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <div>
+                        <strong>${result.threat_type || 'Unknown Threat'}</strong>
+                        <div style="margin-top: 0.25rem;">
+                            <span class="badge ${getSeverityClass(result.severity)}" style="font-size: 0.75rem;">
+                                ${result.severity || 'UNKNOWN'}
+                            </span>
+                            <span style="margin-left: 0.5rem; font-size: 0.875rem; color: var(--gray);">
+                                Confidence: ${result.confidence ? (result.confidence * 100).toFixed(1) : 'N/A'}%
+                            </span>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--gray);">${responseTime}ms</div>
+                </div>
+                <div class="activity-time">${new Date().toLocaleTimeString()}</div>
+            `;
+            history.insertBefore(item, history.firstChild);
+            
+            // Keep only last 10
+            while (history.children.length > 10) {
+                history.removeChild(history.lastChild);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAgentStatus();
+            loadExamples();
+            setInterval(loadAgentStatus, 30000);
+        });
+    </script>
+</body>
+</html>
+

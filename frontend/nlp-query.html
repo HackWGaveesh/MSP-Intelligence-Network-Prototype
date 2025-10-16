@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Query Assistant - MSP Intelligence Mesh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <span>🌐</span>
+                <span>MSP Intelligence Mesh</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle active">Agents ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="threat-intelligence.html" class="dropdown-item">🛡️ Threat Intelligence</a>
+                        <a href="market-intelligence.html" class="dropdown-item">💼 Market Intelligence</a>
+                        <a href="nlp-query.html" class="dropdown-item">💬 NLP Query Assistant</a>
+                        <a href="collaboration.html" class="dropdown-item">🤝 Collaboration Matching</a>
+                        <a href="client-health.html" class="dropdown-item">📊 Client Health Prediction</a>
+                        <a href="revenue-optimization.html" class="dropdown-item">💰 Revenue Optimization</a>
+                        <a href="anomaly-detection.html" class="dropdown-item">🔍 Anomaly Detection</a>
+                        <a href="security-compliance.html" class="dropdown-item">✅ Security Compliance</a>
+                        <a href="resource-allocation.html" class="dropdown-item">📅 Resource Allocation</a>
+                        <a href="federated-learning.html" class="dropdown-item">🌐 Federated Learning</a>
+                    </div>
+                </li>
+                <li><a href="workflow-demo.html" class="nav-link">Multi-Agent Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Dashboard</a>
+
+        <div class="model-info">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">💬 NLP Query Assistant</h1>
+            <p style="opacity: 0.9;">Conversational interface for insights powered by FLAN-T5 Small for natural language understanding</p>
+            <div class="model-details">
+                <div class="model-detail">
+                    <strong>Model</strong>
+                    <div>FLAN-T5 Small</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Accuracy</strong>
+                    <div>89.7%</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Model Size</strong>
+                    <div>~250MB</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Response Time</strong>
+                    <div>~312ms avg</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-4" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="stat-value" id="agent-status">-</div>
+                <div class="stat-label">Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="health-score">-</div>
+                <div class="stat-label">Health Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="queries-processed">1,247</div>
+                <div class="stat-label">Queries Processed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="satisfaction">96%</div>
+                <div class="stat-label">Satisfaction Rate</div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+                <span>💬</span>
+                <span>Ask Me Anything</span>
+            </div>
+            <div class="card-body">
+                <div id="chat-history" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem; padding: 1rem; background: var(--light); border-radius: 0.5rem;">
+                    <div style="text-align: center; color: var(--gray); padding: 2rem;">
+                        <p>👋 Hello! I'm your NLP Query Assistant.</p>
+                        <p style="margin-top: 0.5rem;">Ask me anything about your MSP operations, analytics, or insights!</p>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <div style="display: flex; gap: 1rem;">
+                        <textarea id="query-input" class="form-textarea" placeholder="Ask a question..." style="min-height: 60px;"></textarea>
+                        <button onclick="askQuestion()" class="btn btn-primary" style="height: fit-content;">
+                            <span>Send →</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span>💡</span>
+                <span>Example Questions</span>
+            </div>
+            <div class="card-body">
+                <div id="examples-container" class="grid grid-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function loadAgentStatus() {
+            try {
+                const data = await MSP.apiCall('/agents/status');
+                const agent = data.agents.nlp_query;
+                
+                document.getElementById('agent-status').innerHTML = agent.status === 'active' ? 
+                    '<span class="badge badge-success">Active</span>' : 
+                    '<span class="badge badge-danger">Inactive</span>';
+                document.getElementById('health-score').textContent = (agent.health_score * 100).toFixed(0) + '%';
+            } catch (error) {
+                console.error('Error loading agent status:', error);
+            }
+        }
+
+        function loadExamples() {
+            const examples = MSP.getExampleScenarios('nlp_query');
+            const container = document.getElementById('examples-container');
+            
+            examples.forEach(example => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-outline';
+                btn.style.width = '100%';
+                btn.style.marginBottom = '0.75rem';
+                btn.innerHTML = `<span>📝</span><span>${example.name}</span>`;
+                btn.onclick = () => {
+                    document.getElementById('query-input').value = example.text;
+                    askQuestion();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        async function askQuestion() {
+            const input = document.getElementById('query-input').value;
+            const chatHistory = document.getElementById('chat-history');
+            
+            if (!input.trim()) {
+                MSP.showAlert('Please enter a question', 'warning');
+                return;
+            }
+            
+            // Clear welcome message if first query
+            if (chatHistory.querySelector('p')?.textContent.includes('Hello!')) {
+                chatHistory.innerHTML = '';
+            }
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.style.cssText = 'background: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;';
+            userMsg.innerHTML = `<strong>You:</strong><br>${input}`;
+            chatHistory.appendChild(userMsg);
+            
+            // Add loading indicator
+            const loadingMsg = document.createElement('div');
+            loadingMsg.id = 'loading-msg';
+            loadingMsg.style.cssText = 'background: #e2e8f0; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;';
+            loadingMsg.innerHTML = '<div class="loading"></div>';
+            chatHistory.appendChild(loadingMsg);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            
+            document.getElementById('query-input').value = '';
+            
+            try {
+                const startTime = Date.now();
+                const result = await MSP.apiCall('/nlp-query/ask', {
+                    method: 'POST',
+                    body: JSON.stringify({ query: input })
+                });
+                const responseTime = Date.now() - startTime;
+                
+                // Remove loading
+                loadingMsg.remove();
+                
+                // Add assistant response
+                const assistantMsg = document.createElement('div');
+                assistantMsg.style.cssText = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;';
+                assistantMsg.innerHTML = `
+                    <strong>Assistant:</strong><br>
+                    ${result.response || result.answer || 'I processed your query successfully.'}
+                    <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">
+                        Response time: ${responseTime}ms | Model: FLAN-T5
+                    </div>
+                `;
+                chatHistory.appendChild(assistantMsg);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+                
+            } catch (error) {
+                loadingMsg.innerHTML = `
+                    <span style="color: var(--danger);">❌ Failed to get response: ${error.message}</span>
+                `;
+            }
+        }
+
+        // Allow Enter to send
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAgentStatus();
+            loadExamples();
+            setInterval(loadAgentStatus, 30000);
+            
+            document.getElementById('query-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    askQuestion();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

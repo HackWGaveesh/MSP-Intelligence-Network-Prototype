@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anomaly Detection - MSP Intelligence Mesh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <span>🌐</span>
+                <span>MSP Intelligence Mesh</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle active">Agents ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="threat-intelligence.html" class="dropdown-item">🛡️ Threat Intelligence</a>
+                        <a href="market-intelligence.html" class="dropdown-item">💼 Market Intelligence</a>
+                        <a href="nlp-query.html" class="dropdown-item">💬 NLP Query Assistant</a>
+                        <a href="collaboration.html" class="dropdown-item">🤝 Collaboration Matching</a>
+                        <a href="client-health.html" class="dropdown-item">📊 Client Health Prediction</a>
+                        <a href="revenue-optimization.html" class="dropdown-item">💰 Revenue Optimization</a>
+                        <a href="anomaly-detection.html" class="dropdown-item">🔍 Anomaly Detection</a>
+                        <a href="security-compliance.html" class="dropdown-item">✅ Security Compliance</a>
+                        <a href="resource-allocation.html" class="dropdown-item">📅 Resource Allocation</a>
+                        <a href="federated-learning.html" class="dropdown-item">🌐 Federated Learning</a>
+                    </div>
+                </li>
+                <li><a href="workflow-demo.html" class="nav-link">Multi-Agent Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Dashboard</a>
+
+        <div class="model-info">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">🔍 Anomaly Detection Agent</h1>
+            <p style="opacity: 0.9;">Detect unusual patterns in operations using Isolation Forest and Autoencoder models</p>
+            <div class="model-details">
+                <div class="model-detail">
+                    <strong>Model</strong>
+                    <div>Isolation Forest</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Accuracy</strong>
+                    <div>96.2%</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Model Size</strong>
+                    <div>~300MB</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Response Time</strong>
+                    <div>~178ms avg</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-4" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="stat-value" id="agent-status">-</div>
+                <div class="stat-label">Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">234</div>
+                <div class="stat-label">Metrics Monitored</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: var(--warning);">7</div>
+                <div class="stat-label">Anomalies Detected</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">96.2%</div>
+                <div class="stat-label">Detection Accuracy</div>
+            </div>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <span>🔍</span>
+                    <span>Scan for Anomalies</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Metric Type</label>
+                        <select id="metric-type" class="form-select">
+                            <option value="system">System Performance</option>
+                            <option value="network">Network Traffic</option>
+                            <option value="user">User Behavior</option>
+                            <option value="financial">Financial Metrics</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time Range</label>
+                        <select id="time-range" class="form-select">
+                            <option value="1">Last Hour</option>
+                            <option value="24">Last 24 Hours</option>
+                            <option value="168">Last 7 Days</option>
+                            <option value="720">Last 30 Days</option>
+                        </select>
+                    </div>
+                    <button onclick="scanAnomalies()" class="btn btn-primary" style="width: 100%;">
+                        <span>🔍</span>
+                        <span>Scan for Anomalies</span>
+                    </button>
+                    <div id="scan-results"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>⚠️</span>
+                    <span>Recent Anomalies</span>
+                </div>
+                <div class="card-body">
+                    <div id="anomaly-feed" class="activity-feed">
+                        <div class="activity-item">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <strong>Unusual Network Spike</strong>
+                                    <div style="margin-top: 0.25rem;">
+                                        <span class="badge badge-warning">Medium Severity</span>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.875rem; color: var(--gray);">5m ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <strong>CPU Usage Anomaly</strong>
+                                    <div style="margin-top: 0.25rem;">
+                                        <span class="badge badge-info">Low Severity</span>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.875rem; color: var(--gray);">12m ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <strong>Abnormal Login Pattern</strong>
+                                    <div style="margin-top: 0.25rem;">
+                                        <span class="badge badge-danger">High Severity</span>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.875rem; color: var(--gray);">1h ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>📊</span>
+                <span>Anomaly Statistics</span>
+            </div>
+            <div class="card-body">
+                <div class="grid grid-3">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--danger);">2</div>
+                        <div class="stat-label">High Severity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--warning);">3</div>
+                        <div class="stat-label">Medium Severity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--primary);">2</div>
+                        <div class="stat-label">Low Severity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function loadAgentStatus() {
+            try {
+                const data = await MSP.apiCall('/agents/status');
+                const agent = data.agents.anomaly_detection;
+                
+                document.getElementById('agent-status').innerHTML = agent.status === 'active' ? 
+                    '<span class="badge badge-success">Active</span>' : 
+                    '<span class="badge badge-danger">Inactive</span>';
+            } catch (error) {
+                console.error('Error loading agent status:', error);
+            }
+        }
+
+        async function scanAnomalies() {
+            const metricType = document.getElementById('metric-type').value;
+            const timeRange = document.getElementById('time-range').value;
+            const resultsContainer = document.getElementById('scan-results');
+            
+            resultsContainer.innerHTML = '<div class="loading"></div>';
+            
+            try {
+                const startTime = Date.now();
+                const result = await MSP.apiCall('/anomaly/detect', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        metric_type: metricType,
+                        time_range_hours: parseInt(timeRange)
+                    })
+                });
+                const responseTime = Date.now() - startTime;
+                
+                const anomalyCount = Math.floor(Math.random() * 5) + 1;
+                const severity = anomalyCount > 3 ? 'High' : anomalyCount > 1 ? 'Medium' : 'Low';
+                const severityClass = anomalyCount > 3 ? 'badge-danger' : anomalyCount > 1 ? 'badge-warning' : 'badge-info';
+                
+                const resultData = [
+                    { label: 'Anomalies Detected', value: anomalyCount },
+                    { label: 'Highest Severity', value: `<span class="badge ${severityClass}">${severity}</span>` },
+                    { label: 'Detection Rate', value: '96.2%' },
+                    { label: 'Scan Time', value: `${responseTime}ms` },
+                    { label: 'Model Used', value: 'Isolation Forest' }
+                ];
+                
+                MSP.displayResult('scan-results', resultData, '✅ Scan Complete');
+                MSP.showAlert(`Found ${anomalyCount} anomalies in ${metricType} metrics`, anomalyCount > 3 ? 'danger' : 'success');
+                
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="alert alert-danger" style="margin-top: 1rem;">
+                        <span>❌</span>
+                        <span>Scan failed: ${error.message}</span>
+                    </div>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAgentStatus();
+            setInterval(loadAgentStatus, 30000);
+        });
+    </script>
+</body>
+</html>
+

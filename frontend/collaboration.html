@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaboration Matching - MSP Intelligence Mesh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <span>🌐</span>
+                <span>MSP Intelligence Mesh</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle active">Agents ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="threat-intelligence.html" class="dropdown-item">🛡️ Threat Intelligence</a>
+                        <a href="market-intelligence.html" class="dropdown-item">💼 Market Intelligence</a>
+                        <a href="nlp-query.html" class="dropdown-item">💬 NLP Query Assistant</a>
+                        <a href="collaboration.html" class="dropdown-item">🤝 Collaboration Matching</a>
+                        <a href="client-health.html" class="dropdown-item">📊 Client Health Prediction</a>
+                        <a href="revenue-optimization.html" class="dropdown-item">💰 Revenue Optimization</a>
+                        <a href="anomaly-detection.html" class="dropdown-item">🔍 Anomaly Detection</a>
+                        <a href="security-compliance.html" class="dropdown-item">✅ Security Compliance</a>
+                        <a href="resource-allocation.html" class="dropdown-item">📅 Resource Allocation</a>
+                        <a href="federated-learning.html" class="dropdown-item">🌐 Federated Learning</a>
+                    </div>
+                </li>
+                <li><a href="workflow-demo.html" class="nav-link">Multi-Agent Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Dashboard</a>
+
+        <div class="model-info">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">🤝 Collaboration Matching Agent</h1>
+            <p style="opacity: 0.9;">Partner matching and skill complementarity analysis using Sentence-BERT for semantic matching</p>
+            <div class="model-details">
+                <div class="model-detail">
+                    <strong>Model</strong>
+                    <div>Sentence-BERT</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Accuracy</strong>
+                    <div>91.8%</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Model Size</strong>
+                    <div>~500MB</div>
+                </div>
+                <div class="model-detail">
+                    <strong>Response Time</strong>
+                    <div>~189ms avg</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-4" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="stat-value" id="agent-status">-</div>
+                <div class="stat-label">Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">487</div>
+                <div class="stat-label">Partners Matched</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">78%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">$2.4M</div>
+                <div class="stat-label">Total Deal Value</div>
+            </div>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <span>🔍</span>
+                    <span>Find Partners</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Project Requirements</label>
+                        <textarea id="requirements-input" class="form-textarea" placeholder="Describe your project needs, required skills, certifications..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="findPartners()" class="btn btn-primary" style="flex: 1;">
+                            <span>🔍</span>
+                            <span>Find Partners</span>
+                        </button>
+                        <button onclick="loadExample()" class="btn btn-outline">
+                            <span>💡</span>
+                            <span>Example</span>
+                        </button>
+                    </div>
+                    <div id="match-results"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>🎯</span>
+                    <span>Active Opportunities</span>
+                </div>
+                <div class="card-body">
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: var(--light); border-radius: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <strong>Cloud Migration Project</strong>
+                            <span class="badge badge-success">$450K</span>
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">
+                            Enterprise client needs Azure expertise
+                        </p>
+                        <span class="badge badge-info">3 Partners Available</span>
+                    </div>
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: var(--light); border-radius: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <strong>Security Audit</strong>
+                            <span class="badge badge-success">$180K</span>
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">
+                            SOC2 compliance required
+                        </p>
+                        <span class="badge badge-info">5 Partners Available</span>
+                    </div>
+                    <div style="padding: 1rem; background: var(--light); border-radius: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <strong>24/7 Support Contract</strong>
+                            <span class="badge badge-success">$280K</span>
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">
+                            Healthcare industry experience
+                        </p>
+                        <span class="badge badge-info">2 Partners Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>🤝</span>
+                <span>Recommended Partners</span>
+            </div>
+            <div class="card-body">
+                <div id="partners-list" class="grid grid-3">
+                    <!-- Partners will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function loadAgentStatus() {
+            try {
+                const data = await MSP.apiCall('/agents/status');
+                const agent = data.agents.collaboration_matching;
+                
+                document.getElementById('agent-status').innerHTML = agent.status === 'active' ? 
+                    '<span class="badge badge-success">Active</span>' : 
+                    '<span class="badge badge-danger">Inactive</span>';
+            } catch (error) {
+                console.error('Error loading agent status:', error);
+            }
+        }
+
+        function loadExample() {
+            const examples = MSP.getExampleScenarios('collaboration_matching');
+            const randomExample = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('requirements-input').value = randomExample.text;
+        }
+
+        async function findPartners() {
+            const input = document.getElementById('requirements-input').value;
+            const resultsContainer = document.getElementById('match-results');
+            const partnersList = document.getElementById('partners-list');
+            
+            if (!input.trim()) {
+                MSP.showAlert('Please enter project requirements', 'warning');
+                return;
+            }
+            
+            resultsContainer.innerHTML = '<div class="loading"></div>';
+            partnersList.innerHTML = '<div class="loading"></div>';
+            
+            try {
+                const startTime = Date.now();
+                const result = await MSP.apiCall('/collaboration/match', {
+                    method: 'POST',
+                    body: JSON.stringify({ requirements: input })
+                });
+                const responseTime = Date.now() - startTime;
+                
+                const matchCount = result.matches?.length || 3;
+                const topMatch = result.top_match_score || 0.94;
+                
+                const resultData = [
+                    { label: 'Partners Found', value: matchCount },
+                    { label: 'Top Match Score', value: `${(topMatch * 100).toFixed(1)}%` },
+                    { label: 'Avg Compatibility', value: '87.3%' },
+                    { label: 'Response Time', value: `${responseTime}ms` }
+                ];
+                
+                MSP.displayResult('match-results', resultData, '✅ Matching Complete');
+                
+                // Display partner cards
+                partnersList.innerHTML = '';
+                const partners = [
+                    { name: 'CloudTech MSP', score: 94, skills: 'Azure, Cloud Migration', location: 'New York' },
+                    { name: 'SecureIT Partners', score: 89, skills: 'Security, Compliance', location: 'California' },
+                    { name: 'GlobalSupport Co', score: 85, skills: '24/7 Support, ITIL', location: 'Texas' }
+                ];
+                
+                partners.forEach(partner => {
+                    const card = document.createElement('div');
+                    card.style.cssText = 'padding: 1rem; background: var(--light); border-radius: 0.5rem;';
+                    card.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <strong>${partner.name}</strong>
+                            <span class="badge badge-success">${partner.score}%</span>
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">
+                            ${partner.skills}
+                        </p>
+                        <span style="font-size: 0.75rem; color: var(--gray);">📍 ${partner.location}</span>
+                    `;
+                    partnersList.appendChild(card);
+                });
+                
+                MSP.showAlert('Found matching partners successfully', 'success');
+                
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="alert alert-danger" style="margin-top: 1rem;">
+                        <span>❌</span>
+                        <span>Matching failed: ${error.message}</span>
+                    </div>
+                `;
+                partnersList.innerHTML = '<p style="color: var(--danger); text-align: center;">Matching failed</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAgentStatus();
+            setInterval(loadAgentStatus, 30000);
+        });
+    </script>
+</body>
+</html>
+

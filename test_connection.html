@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MSP Intelligence Mesh Network - Connection Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>MSP Intelligence Mesh Network - Connection Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testConnection() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<p>Testing connections...</p>';
+            
+            try {
+                // Test backend health
+                const healthResponse = await axios.get('http://localhost:8000/health');
+                results.innerHTML += '<p>✅ Backend Health: ' + healthResponse.data.status + '</p>';
+                
+                // Test agent status
+                const agentResponse = await axios.get('http://localhost:8000/agents/status');
+                results.innerHTML += '<p>✅ Agent Status: ' + agentResponse.data.total_agents + ' agents active</p>';
+                
+                // Test threat detection simulation
+                const threatResponse = await axios.post('http://localhost:8000/simulation/threat-detection');
+                results.innerHTML += '<p>✅ Threat Detection: ' + threatResponse.data.threat_type + ' detected</p>';
+                
+                // Test collaboration simulation
+                const collabResponse = await axios.post('http://localhost:8000/simulation/collaboration-opportunity');
+                results.innerHTML += '<p>✅ Collaboration: $' + collabResponse.data.value.toLocaleString() + ' opportunity</p>';
+                
+                // Test federated learning simulation
+                const flResponse = await axios.post('http://localhost:8000/simulation/federated-learning');
+                results.innerHTML += '<p>✅ Federated Learning: Round ' + flResponse.data.simulation_round + ' completed</p>';
+                
+                results.innerHTML += '<p><strong>🎉 All tests passed! The system is working correctly.</strong></p>';
+                
+            } catch (error) {
+                results.innerHTML += '<p>❌ Error: ' + error.message + '</p>';
+                console.error('Connection test failed:', error);
+            }
+        }
+        
+        // Run test when page loads
+        window.onload = testConnection;
+    </script>
+</body>
+</html>
+

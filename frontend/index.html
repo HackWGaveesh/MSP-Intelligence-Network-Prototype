@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSP Intelligence Mesh Network - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <span>🌐</span>
+                <span>MSP Intelligence Mesh</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link active">Dashboard</a></li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle">Agents ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="threat-intelligence.html" class="dropdown-item">🛡️ Threat Intelligence</a>
+                        <a href="market-intelligence.html" class="dropdown-item">💼 Market Intelligence</a>
+                        <a href="nlp-query.html" class="dropdown-item">💬 NLP Query Assistant</a>
+                        <a href="collaboration.html" class="dropdown-item">🤝 Collaboration Matching</a>
+                        <a href="client-health.html" class="dropdown-item">📊 Client Health Prediction</a>
+                        <a href="revenue-optimization.html" class="dropdown-item">💰 Revenue Optimization</a>
+                        <a href="anomaly-detection.html" class="dropdown-item">🔍 Anomaly Detection</a>
+                        <a href="security-compliance.html" class="dropdown-item">✅ Security Compliance</a>
+                        <a href="resource-allocation.html" class="dropdown-item">📅 Resource Allocation</a>
+                        <a href="federated-learning.html" class="dropdown-item">🌐 Federated Learning</a>
+                    </div>
+                </li>
+                <li><a href="workflow-demo.html" class="nav-link">Multi-Agent Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="card" style="margin-bottom: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h1 style="margin-bottom: 0.5rem;">🚀 Welcome to MSP Intelligence Mesh Network</h1>
+            <p style="opacity: 0.9; font-size: 1.1rem;">Revolutionary collective intelligence powered by 10 specialized AI agents working together to solve real MSP challenges.</p>
+        </div>
+
+        <!-- System Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="total-agents">10</div>
+                <div class="stat-label">AI Agents Active</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="active-agents">-</div>
+                <div class="stat-label">Agents Online</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avg-health">-</div>
+                <div class="stat-label">Average Health</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="response-time">-</div>
+                <div class="stat-label">Avg Response Time</div>
+            </div>
+        </div>
+
+        <!-- Agent Grid -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+                <span>🤖</span>
+                <span>AI Agents Overview</span>
+            </div>
+            <div id="agents-grid" class="grid grid-3">
+                <!-- Agent cards will be loaded here -->
+                <div style="text-align: center; padding: 2rem; grid-column: 1 / -1;">
+                    <div class="loading loading-lg"></div>
+                    <p style="margin-top: 1rem; color: var(--gray);">Loading agents...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="grid grid-2">
+            <!-- Quick Test Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🧪</span>
+                    <span>Quick Agent Test</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Select Agent</label>
+                        <select id="quick-test-agent" class="form-select">
+                            <option value="">Choose an agent...</option>
+                            <option value="threat_intelligence">🛡️ Threat Intelligence</option>
+                            <option value="market_intelligence">💼 Market Intelligence</option>
+                            <option value="nlp_query">💬 NLP Query</option>
+                            <option value="collaboration_matching">🤝 Collaboration</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Test Input</label>
+                        <textarea id="quick-test-input" class="form-textarea" placeholder="Enter test data..."></textarea>
+                    </div>
+                    <button onclick="runQuickTest()" class="btn btn-primary" style="width: 100%;">
+                        <span>▶️</span>
+                        <span>Run Test</span>
+                    </button>
+                    <div id="quick-test-results"></div>
+                </div>
+            </div>
+
+            <!-- Live Activity Feed -->
+            <div class="card">
+                <div class="card-header">
+                    <span>📡</span>
+                    <span>Live Activity Feed</span>
+                </div>
+                <div class="card-body">
+                    <div id="activity-feed" class="activity-feed">
+                        <div class="activity-item">
+                            <div>System initialized successfully</div>
+                            <div class="activity-time" id="init-time">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multi-Agent Demo Section -->
+        <div class="card" style="margin-top: 2rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+            <div class="card-header" style="color: white;">
+                <span>🔄</span>
+                <span>Multi-Agent Workflow Demo</span>
+            </div>
+            <div class="card-body" style="color: white;">
+                <p style="margin-bottom: 1rem; opacity: 0.9;">See all 10 agents working together in a coordinated workflow. Watch threat detection, analysis, collaboration, and response in action!</p>
+                <a href="workflow-demo.html" class="btn btn-primary" style="background: white; color: #f5576c;">
+                    <span>🚀</span>
+                    <span>Launch Full Demo</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- System Metrics -->
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <span>📊</span>
+                <span>System Performance Metrics</span>
+            </div>
+            <div class="card-body">
+                <div id="metrics-container">
+                    <div class="result-item">
+                        <span class="result-label">System Status</span>
+                        <span class="result-value"><span class="badge badge-success">Operational</span></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Models Loaded</span>
+                        <span class="result-value" id="models-loaded">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Last Updated</span>
+                        <span class="result-value" id="last-updated">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Load agent status on page load
+        async function loadAgentStatus() {
+            try {
+                const data = await MSP.apiCall('/agents/status');
+                
+                // Update statistics
+                document.getElementById('active-agents').textContent = data.active_agents;
+                
+                // Calculate average health
+                const agents = Object.values(data.agents);
+                const avgHealth = agents.reduce((sum, agent) => sum + agent.health_score, 0) / agents.length;
+                document.getElementById('avg-health').textContent = (avgHealth * 100).toFixed(0) + '%';
+                
+                // Simulate response time (in production, this would come from actual metrics)
+                document.getElementById('response-time').textContent = '234ms';
+                
+                // Count models loaded
+                const modelsLoaded = agents.filter(agent => agent.model_loaded).length;
+                document.getElementById('models-loaded').textContent = `${modelsLoaded} / ${agents.length}`;
+                
+                // Update last updated time
+                document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+                
+                // Render agent cards
+                const grid = document.getElementById('agents-grid');
+                grid.innerHTML = '';
+                
+                Object.keys(data.agents).forEach(agentType => {
+                    const agentData = data.agents[agentType];
+                    grid.innerHTML += MSP.createAgentCard(agentType, agentData);
+                });
+                
+                // Add to activity feed
+                MSP.showAlert('All agents loaded successfully!', 'success');
+                addActivity('✅', 'All 10 AI agents initialized and ready');
+                
+            } catch (error) {
+                console.error('Error loading agents:', error);
+                MSP.showAlert('Failed to load agent status', 'danger');
+                document.getElementById('agents-grid').innerHTML = `
+                    <div style="text-align: center; padding: 2rem; grid-column: 1 / -1;">
+                        <p style="color: var(--danger);">❌ Failed to load agents. Make sure the backend is running.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Quick test functionality
+        async function runQuickTest() {
+            const agentType = document.getElementById('quick-test-agent').value;
+            const input = document.getElementById('quick-test-input').value;
+            const resultsContainer = document.getElementById('quick-test-results');
+            
+            if (!agentType) {
+                MSP.showAlert('Please select an agent', 'warning');
+                return;
+            }
+            
+            if (!input.trim()) {
+                MSP.showAlert('Please enter test input', 'warning');
+                return;
+            }
+            
+            resultsContainer.innerHTML = '<div class="loading"></div>';
+            
+            try {
+                let endpoint, body;
+                
+                switch(agentType) {
+                    case 'threat_intelligence':
+                        endpoint = '/threat-intelligence/analyze';
+                        body = { text: input };
+                        break;
+                    case 'market_intelligence':
+                        endpoint = '/market-intelligence/analyze';
+                        body = { query: input };
+                        break;
+                    case 'nlp_query':
+                        endpoint = '/nlp-query/ask';
+                        body = { query: input };
+                        break;
+                    case 'collaboration_matching':
+                        endpoint = '/collaboration/match';
+                        body = { requirements: input };
+                        break;
+                }
+                
+                const result = await MSP.apiCall(endpoint, {
+                    method: 'POST',
+                    body: JSON.stringify(body)
+                });
+                
+                MSP.displayResult('quick-test-results', result, 'Test Results');
+                addActivity('🧪', `Quick test completed: ${MSP.getAgentName(agentType)}`);
+                
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="alert alert-danger" style="margin-top: 1rem;">
+                        <span>❌</span>
+                        <span>Test failed: ${error.message}</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Add activity to feed
+        function addActivity(icon, message) {
+            const feed = document.getElementById('activity-feed');
+            const item = document.createElement('div');
+            item.className = 'activity-item animate-slide-in';
+            item.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span>${icon}</span>
+                    <span>${message}</span>
+                </div>
+                <div class="activity-time">${new Date().toLocaleTimeString()}</div>
+            `;
+            feed.insertBefore(item, feed.firstChild);
+            
+            // Keep only last 10 items
+            while (feed.children.length > 10) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+
+        // Simulate live activity
+        function simulateActivity() {
+            const activities = [
+                { icon: '🛡️', message: 'Threat Intelligence: Detected potential phishing attempt' },
+                { icon: '💼', message: 'Market Intelligence: Analyzed 127 market trends' },
+                { icon: '💬', message: 'NLP Query: Answered 5 queries successfully' },
+                { icon: '🤝', message: 'Collaboration: Matched 3 new partnership opportunities' },
+                { icon: '📊', message: 'Client Health: Predicted 2 at-risk clients' },
+                { icon: '💰', message: 'Revenue Optimization: Identified $45K upsell opportunity' },
+                { icon: '🔍', message: 'Anomaly Detection: Monitoring 234 metrics' },
+                { icon: '✅', message: 'Security Compliance: Compliance score at 94%' },
+                { icon: '📅', message: 'Resource Allocation: Optimized 12 schedules' },
+                { icon: '🌐', message: 'Federated Learning: Model accuracy improved to 94.2%' }
+            ];
+            
+            setInterval(() => {
+                const activity = activities[Math.floor(Math.random() * activities.length)];
+                addActivity(activity.icon, activity.message);
+            }, 8000); // Every 8 seconds
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('init-time').textContent = new Date().toLocaleTimeString();
+            loadAgentStatus();
+            simulateActivity();
+            
+            // Refresh agent status every 30 seconds
+            setInterval(loadAgentStatus, 30000);
+        });
+    </script>
+</body>
+</html>
