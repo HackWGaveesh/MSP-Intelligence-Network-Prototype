@@ -1,0 +1,7 @@
+{
+  "bucket_name": "msp-intelligence-mesh-frontend",
+  "website_url": "http://msp-intelligence-mesh-frontend.s3-website-us-east-1.amazonaws.com",
+  "cdn_url": null,
+  "api_url": "https://mojoawwjv2.execute-api.us-east-1.amazonaws.com/prod",
+  "files_deployed": 16
+}

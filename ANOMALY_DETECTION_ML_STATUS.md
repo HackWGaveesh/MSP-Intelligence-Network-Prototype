@@ -441,3 +441,7 @@ Enter different metric types and time ranges to see:
 
 **Every anomaly is detected using real Isolation Forest algorithms!** 🚀
 
+
+
+
+

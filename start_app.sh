@@ -145,3 +145,7 @@ echo ""
 # Tail both log files
 tail -f logs/backend.log logs/frontend.log
 
+
+
+
+

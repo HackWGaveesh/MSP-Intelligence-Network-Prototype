@@ -100,3 +100,7 @@ def get_model_loader(agent_type: str):
 print(f"✅ Model loaders ready. Models directory: {MODELS_DIR}")
 print(f"✅ Available loaders: {list(MODEL_LOADERS.keys())}")
 
+
+
+
+

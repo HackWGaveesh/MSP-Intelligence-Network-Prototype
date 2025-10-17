@@ -1,0 +1,16 @@
+{
+  "region": "us-east-1",
+  "project_name": "msp-intelligence-mesh",
+  "lambda_role_arn": "arn:aws:iam::528757807467:role/msp-intelligence-mesh-lambda-role",
+  "buckets": [
+    "arn:aws:s3:::msp-intelligence-mesh-models",
+    "arn:aws:s3:::msp-intelligence-mesh-data"
+  ],
+  "tables": [
+    "arn:aws:dynamodb:us-east-1:528757807467:table/msp-intelligence-mesh-agent-state",
+    "arn:aws:dynamodb:us-east-1:528757807467:table/msp-intelligence-mesh-agent-results",
+    "arn:aws:dynamodb:us-east-1:528757807467:table/msp-intelligence-mesh-threat-events",
+    "arn:aws:dynamodb:us-east-1:528757807467:table/msp-intelligence-mesh-websocket-connections"
+  ],
+  "secret_arn": "arn:aws:secretsmanager:us-east-1:528757807467:secret:msp-intelligence-mesh-credentials-RPovRc"
+}

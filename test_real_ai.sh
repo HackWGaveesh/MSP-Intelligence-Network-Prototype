@@ -38,3 +38,7 @@ echo "✅ All Real AI Models Tested!"
 echo ""
 echo "Open http://localhost:8080 to see the UI"
 
+
+
+
+

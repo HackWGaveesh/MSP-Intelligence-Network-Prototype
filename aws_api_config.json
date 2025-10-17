@@ -1,0 +1,58 @@
+{
+  "api_id": "mojoawwjv2",
+  "invoke_url": "https://mojoawwjv2.execute-api.us-east-1.amazonaws.com/prod",
+  "region": "us-east-1",
+  "stage": "prod",
+  "resources": [
+    {
+      "path": "/threat-intelligence",
+      "resource_id": "igvyh0",
+      "lambda": "msp-intelligence-mesh-threat-intelligence"
+    },
+    {
+      "path": "/market-intelligence",
+      "resource_id": "exykgr",
+      "lambda": "msp-intelligence-mesh-market-intelligence"
+    },
+    {
+      "path": "/client-health",
+      "resource_id": "twkbm6",
+      "lambda": "msp-intelligence-mesh-client-health"
+    },
+    {
+      "path": "/revenue",
+      "resource_id": "xlwapv",
+      "lambda": "msp-intelligence-mesh-revenue-optimization"
+    },
+    {
+      "path": "/anomaly",
+      "resource_id": "6uq8on",
+      "lambda": "msp-intelligence-mesh-anomaly-detection"
+    },
+    {
+      "path": "/nlp-query",
+      "resource_id": "h2xrif",
+      "lambda": "msp-intelligence-mesh-nlp-query"
+    },
+    {
+      "path": "/collaboration",
+      "resource_id": "74dm5s",
+      "lambda": "msp-intelligence-mesh-collaboration"
+    },
+    {
+      "path": "/compliance",
+      "resource_id": "fzbq59",
+      "lambda": "msp-intelligence-mesh-security-compliance"
+    },
+    {
+      "path": "/resource",
+      "resource_id": "n93689",
+      "lambda": "msp-intelligence-mesh-resource-allocation"
+    },
+    {
+      "path": "/federated",
+      "resource_id": "aemuy6",
+      "lambda": "msp-intelligence-mesh-federated-learning"
+    }
+  ]
+}

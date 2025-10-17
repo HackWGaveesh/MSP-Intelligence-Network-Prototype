@@ -1,0 +1,12 @@
+{
+  "project_name": "MSP Intelligence Mesh Network",
+  "deployment_date": "2025-10-17T05:18:41.755677",
+  "aws_region": "us-east-1",
+  "total_services": 10,
+  "lambda_functions": 10,
+  "api_endpoints": 10,
+  "frontend_url": "http://msp-intelligence-mesh-frontend.s3-website-us-east-1.amazonaws.com",
+  "api_url": "https://mojoawwjv2.execute-api.us-east-1.amazonaws.com/prod",
+  "estimated_monthly_cost": "$60-85",
+  "status": "PRODUCTION READY"
+}

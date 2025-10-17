@@ -1,0 +1,15 @@
+{
+  "functions": [
+    "msp-intelligence-mesh-threat-intelligence",
+    "msp-intelligence-mesh-market-intelligence",
+    "msp-intelligence-mesh-client-health",
+    "msp-intelligence-mesh-revenue-optimization",
+    "msp-intelligence-mesh-anomaly-detection",
+    "msp-intelligence-mesh-nlp-query",
+    "msp-intelligence-mesh-collaboration",
+    "msp-intelligence-mesh-security-compliance",
+    "msp-intelligence-mesh-resource-allocation",
+    "msp-intelligence-mesh-federated-learning"
+  ],
+  "region": "us-east-1"
+}

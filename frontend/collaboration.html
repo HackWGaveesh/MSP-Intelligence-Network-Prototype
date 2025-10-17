@@ -161,6 +161,18 @@
 
     <script src="app.js"></script>
     <script>
+            // Enhanced error handling
+            function handleApiError(error, context) {
+                console.error(`API Error in ${context}:`, error);
+                MSP.showAlert(`Failed to connect to ${context} agent. Please try again.`, 'danger');
+            }
+            
+            // Enhanced success handling
+            function handleApiSuccess(result, context) {
+                console.log(`${context} API Success:`, result);
+                return result;
+            }
+            
         async function loadAgentStatus() {
             try {
                 const data = await MSP.apiCall('/agents/status');
@@ -195,7 +207,7 @@
             
             try {
                 const startTime = Date.now();
-                const result = await MSP.apiCall('/collaboration/match', {
+                const result = await MSP.apiCall('/collaboration', {
                     method: 'POST',
                     body: JSON.stringify({ requirements: input })
                 });
@@ -257,4 +269,8 @@
     </script>
 </body>
 </html>
+
+
+
+
 

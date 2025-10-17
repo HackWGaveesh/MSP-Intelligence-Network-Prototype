@@ -1,23 +1,26 @@
 // MSP Intelligence Mesh Network - Shared JavaScript
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'https://mojoawwjv2.execute-api.us-east-1.amazonaws.com/prod';
+
+// Create global MSP namespace
+window.MSP = window.MSP || {};
 
 // Utility Functions
-const showLoading = (elementId) => {
+MSP.showLoading = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
         element.innerHTML = '<div class="loading loading-lg"></div>';
     }
 };
 
-const hideLoading = (elementId) => {
+MSP.hideLoading = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
         element.innerHTML = '';
     }
 };
 
-const showAlert = (message, type = 'info') => {
+MSP.showAlert = (message, type = 'info') => {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} animate-slide-in`;
     alertDiv.innerHTML = `
@@ -33,9 +36,13 @@ const showAlert = (message, type = 'info') => {
 };
 
 // API Functions
-const apiCall = async (endpoint, options = {}) => {
+MSP.apiCall = async (endpoint, options = {}) => {
     try {
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        const url = `${API_BASE_URL}${endpoint}`;
+        console.log('API Call:', url);
+        
+        const response = await fetch(url, {
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
                 ...options.headers
@@ -44,15 +51,23 @@ const apiCall = async (endpoint, options = {}) => {
         });
         
         if (!response.ok) {
-            throw new Error(`API Error: ${response.statusText}`);
+            throw new Error(`API Error: ${response.status} ${response.statusText}`);
         }
         
-        return await response.json();
+        const data = await response.json();
+        console.log('API Response:', data);
+        return data;
     } catch (error) {
         console.error('API Call Error:', error);
         throw error;
     }
 };
+
+// Legacy support
+const showLoading = MSP.showLoading;
+const hideLoading = MSP.hideLoading;
+const showAlert = MSP.showAlert;
+const apiCall = MSP.apiCall;
 
 // Dropdown Handler
 document.addEventListener('DOMContentLoaded', () => {
@@ -85,23 +100,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Format number with commas
-const formatNumber = (num) => {
+MSP.formatNumber = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
+const formatNumber = MSP.formatNumber;
 
 // Format percentage
-const formatPercentage = (num) => {
+MSP.formatPercentage = (num) => {
     return `${(num * 100).toFixed(1)}%`;
 };
+const formatPercentage = MSP.formatPercentage;
 
 // Format time (ms to readable)
 const formatTime = (ms) => {
     if (ms < 1000) return `${ms}ms`;
     return `${(ms / 1000).toFixed(2)}s`;
 };
+MSP.formatTime = formatTime;
 
 // Get agent color
-const getAgentColor = (agentType) => {
+MSP.getAgentColor = (agentType) => {
     const colors = {
         'threat_intelligence': '#ef4444',
         'market_intelligence': '#3b82f6',
@@ -116,9 +134,10 @@ const getAgentColor = (agentType) => {
     };
     return colors[agentType] || '#64748b';
 };
+const getAgentColor = MSP.getAgentColor;
 
 // Get agent icon
-const getAgentIcon = (agentType) => {
+MSP.getAgentIcon = (agentType) => {
     const icons = {
         'threat_intelligence': '🛡️',
         'market_intelligence': '💼',
@@ -133,9 +152,10 @@ const getAgentIcon = (agentType) => {
     };
     return icons[agentType] || '🤖';
 };
+const getAgentIcon = MSP.getAgentIcon;
 
 // Get agent name
-const getAgentName = (agentType) => {
+MSP.getAgentName = (agentType) => {
     const names = {
         'threat_intelligence': 'Threat Intelligence',
         'market_intelligence': 'Market Intelligence',
@@ -150,9 +170,10 @@ const getAgentName = (agentType) => {
     };
     return names[agentType] || agentType;
 };
+const getAgentName = MSP.getAgentName;
 
 // Create agent card
-const createAgentCard = (agentType, agentData) => {
+MSP.createAgentCard = (agentType, agentData) => {
     const icon = getAgentIcon(agentType);
     const name = getAgentName(agentType);
     const health = agentData.health_score * 100;
@@ -250,7 +271,7 @@ const getExampleScenarios = (agentType) => {
 };
 
 // Display result in formatted card
-const displayResult = (containerId, data, title = 'Results') => {
+MSP.displayResult = (containerId, data, title = 'Results') => {
     const container = document.getElementById(containerId);
     if (!container) return;
     

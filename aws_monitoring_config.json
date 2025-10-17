@@ -1,0 +1,10 @@
+{
+  "dashboard": "msp-intelligence-mesh-dashboard",
+  "alarms": [
+    "lambda-high-errors",
+    "api-5xx-errors",
+    "lambda-high-duration"
+  ],
+  "x_ray_enabled": true,
+  "logs_retention_days": 7
+}

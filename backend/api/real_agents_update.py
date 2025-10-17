@@ -145,3 +145,7 @@ async def nlp_query(request: NLPQueryRequest):
 print("Update snippets prepared!")
 print("Apply these to main_simple.py")
 
+
+
+
+

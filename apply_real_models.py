@@ -77,3 +77,7 @@ with open('backend/api/main_simple.py', 'w') as f:
 print("✅ Updated main_simple.py with model indicators!")
 print("Note: Models will be used if loaded successfully")
 
+
+
+
+
