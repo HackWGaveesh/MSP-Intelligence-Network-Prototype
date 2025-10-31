@@ -58,18 +58,18 @@
         <!-- Welcome Section -->
         <div class="card" style="margin-bottom: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
             <h1 style="margin-bottom: 0.5rem;">🚀 Welcome to MSP Intelligence Mesh Network</h1>
-            <p style="opacity: 0.9; font-size: 1.1rem;">Revolutionary collective intelligence powered by 10 specialized AI agents working together to solve real MSP challenges.</p>
+            <p style="opacity: 0.9; font-size: 1.1rem;">10 specialized AI agents working together in real-time.</p>
         </div>
 
         <!-- System Statistics -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-value" id="total-agents">10</div>
-                <div class="stat-label">AI Agents Active</div>
+                <div class="stat-value" id="total-agents">-</div>
+                <div class="stat-label">AI Agents</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="active-agents">-</div>
-                <div class="stat-label">Agents Online</div>
+                <div class="stat-label">Active</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="avg-health">-</div>
@@ -77,7 +77,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="response-time">-</div>
-                <div class="stat-label">Avg Response Time</div>
+                <div class="stat-label">Avg Response</div>
             </div>
         </div>
 
@@ -88,7 +88,6 @@
                 <span>AI Agents Overview</span>
             </div>
             <div id="agents-grid" class="grid grid-3">
-                <!-- Agent cards will be loaded here -->
                 <div style="text-align: center; padding: 2rem; grid-column: 1 / -1;">
                     <div class="loading loading-lg"></div>
                     <p style="margin-top: 1rem; color: var(--gray);">Loading agents...</p>
@@ -96,49 +95,17 @@
             </div>
         </div>
 
-        <!-- Two Column Layout -->
-        <div class="grid grid-2">
-            <!-- Quick Test Panel -->
-            <div class="card">
-                <div class="card-header">
-                    <span>🧪</span>
-                    <span>Quick Agent Test</span>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="form-label">Select Agent</label>
-                        <select id="quick-test-agent" class="form-select">
-                            <option value="">Choose an agent...</option>
-                            <option value="threat_intelligence">🛡️ Threat Intelligence</option>
-                            <option value="market_intelligence">💼 Market Intelligence</option>
-                            <option value="nlp_query">💬 NLP Query</option>
-                            <option value="collaboration_matching">🤝 Collaboration</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Test Input</label>
-                        <textarea id="quick-test-input" class="form-textarea" placeholder="Enter test data..."></textarea>
-                    </div>
-                    <button onclick="runQuickTest()" class="btn btn-primary" style="width: 100%;">
-                        <span>▶️</span>
-                        <span>Run Test</span>
-                    </button>
-                    <div id="quick-test-results"></div>
-                </div>
+        <!-- Live Activity Feed -->
+        <div class="card">
+            <div class="card-header">
+                <span>📡</span>
+                <span>Live Activity Feed</span>
             </div>
-
-            <!-- Live Activity Feed -->
-            <div class="card">
-                <div class="card-header">
-                    <span>📡</span>
-                    <span>Live Activity Feed</span>
-                </div>
-                <div class="card-body">
-                    <div id="activity-feed" class="activity-feed">
-                        <div class="activity-item">
-                            <div>System initialized successfully</div>
-                            <div class="activity-time" id="init-time">-</div>
-                        </div>
+            <div class="card-body">
+                <div id="activity-feed" class="activity-feed">
+                    <div class="activity-item">
+                        <div>System initialized successfully</div>
+                        <div class="activity-time" id="init-time">-</div>
                     </div>
                 </div>
             </div>
@@ -186,533 +153,36 @@
 
     <script src="app.js"></script>
     <script>
-        // Load agent status on page load
-        
-        function displayAgentStatus(data) {
-            const agentsContainer = document.getElementById('agents-container');
-            if (!agentsContainer) return;
-            
-            const agents = data.agents || [];
-            const summary = data.summary || {};
-            
-            // Update summary stats
-            const totalAgentsEl = document.getElementById('total-agents');
-            const operationalEl = document.getElementById('operational-agents');
-            const requestsEl = document.getElementById('total-requests');
-            const uptimeEl = document.getElementById('average-uptime');
-            
-            if (totalAgentsEl) totalAgentsEl.textContent = summary.total_agents || agents.length;
-            if (operationalEl) operationalEl.textContent = summary.operational_agents || agents.filter(a => a.status === 'operational').length;
-            if (requestsEl) requestsEl.textContent = summary.total_requests_today || 0;
-            if (uptimeEl) uptimeEl.textContent = summary.average_uptime || '99.8%';
-            
-            // Display agent cards
-            agentsContainer.innerHTML = '';
-            agents.forEach(agent => {
-                const agentCard = createAgentCard(agent);
-                agentsContainer.appendChild(agentCard);
-            });
-            
-            console.log('Agent status displayed successfully');
-        }
-        
-        function createAgentCard(agent) {
-            const card = document.createElement('div');
-            card.className = 'agent-card';
-            card.innerHTML = `
-                <div class="agent-header">
-                    <span class="agent-icon">${agent.icon}</span>
-                    <h3>${agent.name}</h3>
-                    <span class="status-badge status-${agent.status}">${agent.status}</span>
-                </div>
-                <div class="agent-metrics">
-                    <div class="metric">
-                        <span class="metric-label">Uptime</span>
-                        <span class="metric-value">${agent.uptime}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Requests Today</span>
-                        <span class="metric-value">${agent.requests_today}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Avg Response</span>
-                        <span class="metric-value">${agent.avg_response_time}</span>
-                    </div>
-                </div>
-                <div class="agent-footer">
-                    <span class="last-activity">Last activity: ${agent.last_activity}</span>
-                </div>
-            `;
-            return card;
-        }
-        
-        
         async function loadAgentStatus() {
-            const loadingElement = document.getElementById('agents-container');
-            if (loadingElement) {
-                loadingElement.innerHTML = '<div class="loading-container"><div class="loading loading-lg"></div><p>Loading AI agents...</p></div>';
-            }
-            
+            const grid = document.getElementById('agents-grid');
+            grid.innerHTML = '<div style="text-align: center; padding: 2rem; grid-column: 1 / -1;"><div class="loading loading-lg"></div><p style="margin-top: 1rem; color: var(--gray);">Loading agents...</p></div>';
             try {
-                console.log('Loading agent status from API...');
-                
-                // Add timeout to prevent hanging
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-                
-                const data = await MSP.apiCall('/agents/status', {
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                console.log('API Response:', data);
-                
-                if (data && data.agents) {
-                    displayAgentStatus(data);
-                    return;
-                }
-                
-                // Fallback to mock data if API response is invalid
-                console.log('API response invalid, using mock data');
-                displayMockData();
-                
-            } catch (error) {
-                console.error('Error loading agent status:', error);
-                
-                if (error.name === 'AbortError') {
-                    console.log('Request timed out, using mock data');
-                    displayMockData();
-                } else {
-                    console.log('API error, using mock data');
-                    displayMockData();
-                }
-            }
-        }
-        
-        function displayMockData() {
-            const mockData = {
-                agents: [
-                    {
-                        id: 'threat-intelligence',
-                        name: 'Threat Intelligence',
-                        icon: '🛡️',
-                        status: 'operational',
-                        uptime: '99.9%',
-                        last_activity: '2 minutes ago',
-                        requests_today: 291,
-                        avg_response_time: '64ms'
-                    },
-                    {
-                        id: 'market-intelligence',
-                        name: 'Market Intelligence',
-                        icon: '💼',
-                        status: 'operational',
-                        uptime: '99.8%',
-                        last_activity: '1 minute ago',
-                        requests_today: 225,
-                        avg_response_time: '86ms'
-                    },
-                    {
-                        id: 'nlp-query',
-                        name: 'NLP Query Assistant',
-                        icon: '💬',
-                        status: 'operational',
-                        uptime: '99.9%',
-                        last_activity: '30 seconds ago',
-                        requests_today: 201,
-                        avg_response_time: '40ms'
-                    },
-                    {
-                        id: 'collaboration',
-                        name: 'Collaboration Matching',
-                        icon: '🤝',
-                        status: 'operational',
-                        uptime: '99.7%',
-                        last_activity: '3 minutes ago',
-                        requests_today: 83,
-                        avg_response_time: '74ms'
-                    },
-                    {
-                        id: 'client-health',
-                        name: 'Client Health Prediction',
-                        icon: '📊',
-                        status: 'operational',
-                        uptime: '99.9%',
-                        last_activity: '1 minute ago',
-                        requests_today: 190,
-                        avg_response_time: '62ms'
-                    },
-                    {
-                        id: 'revenue-optimization',
-                        name: 'Revenue Optimization',
-                        icon: '💰',
-                        status: 'operational',
-                        uptime: '99.8%',
-                        last_activity: '2 minutes ago',
-                        requests_today: 106,
-                        avg_response_time: '102ms'
-                    },
-                    {
-                        id: 'anomaly-detection',
-                        name: 'Anomaly Detection',
-                        icon: '🔍',
-                        status: 'operational',
-                        uptime: '99.9%',
-                        last_activity: '45 seconds ago',
-                        requests_today: 319,
-                        avg_response_time: '73ms'
-                    },
-                    {
-                        id: 'compliance',
-                        name: 'Security Compliance',
-                        icon: '✅',
-                        status: 'operational',
-                        uptime: '99.8%',
-                        last_activity: '4 minutes ago',
-                        requests_today: 77,
-                        avg_response_time: '105ms'
-                    },
-                    {
-                        id: 'resource-allocation',
-                        name: 'Resource Allocation',
-                        icon: '📅',
-                        status: 'operational',
-                        uptime: '99.7%',
-                        last_activity: '1 minute ago',
-                        requests_today: 93,
-                        avg_response_time: '85ms'
-                    },
-                    {
-                        id: 'federated-learning',
-                        name: 'Federated Learning',
-                        icon: '🌐',
-                        status: 'operational',
-                        uptime: '99.9%',
-                        last_activity: '5 minutes ago',
-                        requests_today: 47,
-                        avg_response_time: '132ms'
-                    }
-                ],
-                summary: {
-                    total_agents: 10,
-                    operational_agents: 10,
-                    total_requests_today: 1632,
-                    average_uptime: '99.8%',
-                    network_status: 'Healthy'
-                }
-            };
-            
-            displayAgentStatus(mockData);
-        }
-        
-        function displayAgentStatus(data) {
-            const agentsContainer = document.getElementById('agents-container');
-            if (!agentsContainer) return;
-            
-            const agents = data.agents || [];
-            const summary = data.summary || {};
-            
-            // Update summary stats
-            const totalAgentsEl = document.getElementById('total-agents');
-            const operationalEl = document.getElementById('operational-agents');
-            const requestsEl = document.getElementById('total-requests');
-            const uptimeEl = document.getElementById('average-uptime');
-            
-            if (totalAgentsEl) totalAgentsEl.textContent = summary.total_agents || agents.length;
-            if (operationalEl) operationalEl.textContent = summary.operational_agents || agents.filter(a => a.status === 'operational').length;
-            if (requestsEl) requestsEl.textContent = summary.total_requests_today || 0;
-            if (uptimeEl) uptimeEl.textContent = summary.average_uptime || '99.8%';
-            
-            // Display agent cards
-            agentsContainer.innerHTML = '';
-            agents.forEach(agent => {
-                const agentCard = createAgentCard(agent);
-                agentsContainer.appendChild(agentCard);
-            });
-            
-            console.log('Agent status displayed successfully');
-        }
-        
-        function createAgentCard(agent) {
-            const card = document.createElement('div');
-            card.className = 'agent-card';
-            card.innerHTML = `
-                <div class="agent-header">
-                    <span class="agent-icon">${agent.icon}</span>
-                    <h3>${agent.name}</h3>
-                    <span class="status-badge status-${agent.status}">${agent.status}</span>
-                </div>
-                <div class="agent-metrics">
-                    <div class="metric">
-                        <span class="metric-label">Uptime</span>
-                        <span class="metric-value">${agent.uptime}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Requests Today</span>
-                        <span class="metric-value">${agent.requests_today}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Avg Response</span>
-                        <span class="metric-value">${agent.avg_response_time}</span>
-                    </div>
-                </div>
-                <div class="agent-footer">
-                    <span class="last-activity">Last activity: ${agent.last_activity}</span>
-                </div>
-            `;
-            return card;
-        }
-        
-        async function loadAgentStatus() {
-                    displayAgentStatus(data);
-                    return;
-                }
-                
-                // Fallback to mock data if API response is invalid
-                console.log('API response invalid, using mock data');
-                const mockData = {
-                    displayAgentStatus(data);
-                    return;
-                }
-                
-                // Fallback to mock data if API response is invalid
-                console.log('API response invalid, using mock data');
-                const mockData = {
-                        agents: {
-                            threat_intelligence: {
-                                status: "active",
-                                health_score: 0.95,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Threat Intelligence",
-                                icon: "🛡️"
-                            },
-                            market_intelligence: {
-                                status: "active",
-                                health_score: 0.93,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Market Intelligence",
-                                icon: "💼"
-                            },
-                            nlp_query: {
-                                status: "active",
-                                health_score: 0.93,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "NLP Query Assistant",
-                                icon: "💬"
-                            },
-                            collaboration_matching: {
-                                status: "active",
-                                health_score: 0.92,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Collaboration Matching",
-                                icon: "🤝"
-                            },
-                            client_health: {
-                                status: "active",
-                                health_score: 0.94,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Client Health Prediction",
-                                icon: "📊"
-                            },
-                            revenue_optimization: {
-                                status: "active",
-                                health_score: 0.92,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Revenue Optimization",
-                                icon: "💰"
-                            },
-                            anomaly_detection: {
-                                status: "active",
-                                health_score: 0.96,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Anomaly Detection",
-                                icon: "🔍"
-                            },
-                            security_compliance: {
-                                status: "active",
-                                health_score: 0.88,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Security Compliance",
-                                icon: "✅"
-                            },
-                            resource_allocation: {
-                                status: "active",
-                                health_score: 0.91,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Resource Allocation",
-                                icon: "📅"
-                            },
-                            federated_learning: {
-                                status: "active",
-                                health_score: 0.98,
-                                model_loaded: true,
-                                last_activity: new Date().toISOString(),
-                                name: "Federated Learning",
-                                icon: "🌐"
-                            }
-                        },
-                        total_agents: 10,
-                        active_agents: 10
-                    };
-                }
-                
-                // Update statistics
-                document.getElementById('active-agents').textContent = data.active_agents;
-                
-                // Calculate average health
-                const agents = Object.values(data.agents);
-                const avgHealth = agents.reduce((sum, agent) => sum + agent.health_score, 0) / agents.length;
-                document.getElementById('avg-health').textContent = (avgHealth * 100).toFixed(0) + '%';
-                
-                // Simulate response time (in production, this would come from actual metrics)
-                document.getElementById('response-time').textContent = '234ms';
-                
-                // Count models loaded
-                const modelsLoaded = agents.filter(agent => agent.model_loaded).length;
-                document.getElementById('models-loaded').textContent = `${modelsLoaded} / ${agents.length}`;
-                
-                // Update last updated time
-                document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
-                
-                // Render agent cards
-                const grid = document.getElementById('agents-grid');
+                const data = await MSP.apiCall('/agents/status');
+                // Expect backend format: { agents: { agent_type: { status, health_score, ... } }, total_agents, active_agents }
+                const agentsObj = data.agents || {};
+                const agentTypes = Object.keys(agentsObj);
+
+                // Update stats
+                document.getElementById('total-agents').textContent = data.total_agents ?? agentTypes.length;
+                document.getElementById('active-agents').textContent = data.active_agents ?? agentTypes.length;
+                const avg = agentTypes.length ? (agentTypes.map(k => agentsObj[k].health_score || 0).reduce((a,b)=>a+b,0) / agentTypes.length) : 0;
+                document.getElementById('avg-health').textContent = `${Math.round(avg * 100)}%`;
+                document.getElementById('response-time').textContent = '—';
+
+                // Render cards
                 grid.innerHTML = '';
-                
-                Object.keys(data.agents).forEach(agentType => {
-                    const agentData = data.agents[agentType];
-                    grid.innerHTML += MSP.createAgentCard(agentType, agentData);
+                agentTypes.forEach((type) => {
+                    const agentData = agentsObj[type];
+                    grid.innerHTML += MSP.createAgentCard(type, agentData);
                 });
-                
-                // Add to activity feed
-                MSP.showAlert('All agents loaded successfully!', 'success');
-                addActivity('✅', 'All 10 AI agents initialized and ready');
-                
-            } catch (error) {
-                console.error('Error loading agents:', error);
-                MSP.showAlert('Failed to load agent status', 'danger');
-                document.getElementById('agents-grid').innerHTML = `
-                    <div style="text-align: center; padding: 2rem; grid-column: 1 / -1;">
-                        <p style="color: var(--danger);">❌ Failed to load agents. Make sure the backend is running.</p>
-                    </div>
-                `;
+            } catch (err) {
+                console.error('Failed to load agents:', err);
+                grid.innerHTML = '<div style="text-align:center; padding:2rem; grid-column:1 / -1;">❌ Failed to load agents. Ensure backend is running at http://localhost:8000</div>';
             }
         }
 
-        // Quick test functionality
-        async function runQuickTest() {
-            const agentType = document.getElementById('quick-test-agent').value;
-            const input = document.getElementById('quick-test-input').value;
-            const resultsContainer = document.getElementById('quick-test-results');
-            
-            if (!agentType) {
-                MSP.showAlert('Please select an agent', 'warning');
-                return;
-            }
-            
-            if (!input.trim()) {
-                MSP.showAlert('Please enter test input', 'warning');
-                return;
-            }
-            
-            resultsContainer.innerHTML = '<div class="loading"></div>';
-            
-            try {
-                let endpoint, body;
-                
-                switch(agentType) {
-                    case 'threat_intelligence':
-                        endpoint = '/threat-intelligence/analyze';
-                        body = { text: input };
-                        break;
-                    case 'market_intelligence':
-                        endpoint = '/market-intelligence/analyze';
-                        body = { query: input };
-                        break;
-                    case 'nlp_query':
-                        endpoint = '/nlp-query/ask';
-                        body = { query: input };
-                        break;
-                    case 'collaboration_matching':
-                        endpoint = '/collaboration/match';
-                        body = { requirements: input };
-                        break;
-                }
-                
-                const result = await MSP.apiCall(endpoint, {
-                    method: 'POST',
-                    body: JSON.stringify(body)
-                });
-                
-                MSP.displayResult('quick-test-results', result, 'Test Results');
-                addActivity('🧪', `Quick test completed: ${MSP.getAgentName(agentType)}`);
-                
-            } catch (error) {
-                resultsContainer.innerHTML = `
-                    <div class="alert alert-danger" style="margin-top: 1rem;">
-                        <span>❌</span>
-                        <span>Test failed: ${error.message}</span>
-                    </div>
-                `;
-            }
-        }
-
-        // Add activity to feed
-        function addActivity(icon, message) {
-            const feed = document.getElementById('activity-feed');
-            const item = document.createElement('div');
-            item.className = 'activity-item animate-slide-in';
-            item.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <span>${icon}</span>
-                    <span>${message}</span>
-                </div>
-                <div class="activity-time">${new Date().toLocaleTimeString()}</div>
-            `;
-            feed.insertBefore(item, feed.firstChild);
-            
-            // Keep only last 10 items
-            while (feed.children.length > 10) {
-                feed.removeChild(feed.lastChild);
-            }
-        }
-
-        // Simulate live activity
-        function simulateActivity() {
-            const activities = [
-                { icon: '🛡️', message: 'Threat Intelligence: Detected potential phishing attempt' },
-                { icon: '💼', message: 'Market Intelligence: Analyzed 127 market trends' },
-                { icon: '💬', message: 'NLP Query: Answered 5 queries successfully' },
-                { icon: '🤝', message: 'Collaboration: Matched 3 new partnership opportunities' },
-                { icon: '📊', message: 'Client Health: Predicted 2 at-risk clients' },
-                { icon: '💰', message: 'Revenue Optimization: Identified $45K upsell opportunity' },
-                { icon: '🔍', message: 'Anomaly Detection: Monitoring 234 metrics' },
-                { icon: '✅', message: 'Security Compliance: Compliance score at 94%' },
-                { icon: '📅', message: 'Resource Allocation: Optimized 12 schedules' },
-                { icon: '🌐', message: 'Federated Learning: Model accuracy improved to 94.2%' }
-            ];
-            
-            setInterval(() => {
-                const activity = activities[Math.floor(Math.random() * activities.length)];
-                addActivity(activity.icon, activity.message);
-            }, 8000); // Every 8 seconds
-        }
-
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('init-time').textContent = new Date().toLocaleTimeString();
             loadAgentStatus();
-            simulateActivity();
-            
-            // Refresh agent status every 30 seconds
             setInterval(loadAgentStatus, 30000);
         });
     </script>

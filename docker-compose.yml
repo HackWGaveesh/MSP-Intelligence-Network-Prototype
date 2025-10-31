@@ -1,196 +1,62 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  # Backend API Service
-  backend:
-    build:
-      context: ./backend
-      dockerfile: ../docker/Dockerfile.backend
-    container_name: msp-intelligence-backend
-    ports:
-      - "8000:8000"
-    environment:
-      - DEBUG=True
-      - LOG_LEVEL=INFO
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION:-us-east-1}
-      - MONGODB_URL=${MONGODB_URL}
-      - PINECONE_API_KEY=${PINECONE_API_KEY}
-      - REDIS_URL=${REDIS_URL}
-      - REDIS_TOKEN=${REDIS_TOKEN}
-      - SECRET_KEY=${SECRET_KEY:-msp-intelligence-mesh-network-secret-key-2025}
-      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - GROK_API_KEY=${GROK_API_KEY}
+  model-download:
+    image: python:3.11-slim
+    working_dir: /app
     volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs
-    networks:
-      - msp-network
-    restart: unless-stopped
+      - ./:/app:rw
+      - models_cache:/app/backend/models/pretrained
+    command: >
+      bash -lc "apt-get update && apt-get install -y git && \
+      pip install -U pip && \
+      pip install transformers sentence-transformers scikit-learn numpy torch --index-url https://download.pytorch.org/whl/cpu && \
+      python backend/models/download_models.py"
+    restart: "no"
+
+  backend:
+    image: python:3.11-slim
+    working_dir: /app
+    depends_on:
+      model-download:
+        condition: service_completed_successfully
+    volumes:
+      - ./:/app:rw
+      - models_cache:/app/backend/models/pretrained
+    environment:
+      - TRANSFORMERS_CACHE=/app/backend/models/pretrained
+      - HF_HOME=/app/backend/models/pretrained
+    command: >
+      bash -lc "apt-get update && apt-get install -y curl && \
+      pip install -U pip && \
+      pip install fastapi uvicorn[standard] transformers sentence-transformers scikit-learn numpy torch --index-url https://download.pytorch.org/whl/cpu && \
+      python backend/api/main_simple.py"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
-      retries: 3
+      retries: 5
       start_period: 40s
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
 
-  # Frontend React Application
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: ../docker/Dockerfile.frontend
-    container_name: msp-intelligence-frontend
-    ports:
-      - "3000:3000"
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000
-      - REACT_APP_WS_URL=ws://localhost:8000/ws
-    depends_on:
-      - backend
-    networks:
-      - msp-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
-  # Redis Cache Service
-  redis:
-    image: redis:7-alpine
-    container_name: msp-intelligence-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - msp-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # MongoDB Database (for local development)
-  mongodb:
-    image: mongo:7
-    container_name: msp-intelligence-mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password123
-      - MONGO_INITDB_DATABASE=msp_network
-    volumes:
-      - mongodb_data:/data/db
-      - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    networks:
-      - msp-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # Nginx Reverse Proxy
-  nginx:
     image: nginx:alpine
-    container_name: msp-intelligence-nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./docker/ssl:/etc/nginx/ssl:ro
     depends_on:
       - backend
-      - frontend
-    networks:
-      - msp-network
-    restart: unless-stopped
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:80 || exit 1"]
       interval: 30s
       timeout: 10s
-      retries: 3
-
-  # Data Generator Service (for demo data)
-  data-generator:
-    build:
-      context: ./backend
-      dockerfile: ../docker/Dockerfile.backend
-    container_name: msp-intelligence-data-generator
-    command: python -m utils.data_generator
-    environment:
-      - MONGODB_URL=mongodb://admin:password123@mongodb:27017/msp_network?authSource=admin
-      - REDIS_URL=redis://redis:6379
-    volumes:
-      - ./data:/app/data
-    depends_on:
-      - mongodb
-      - redis
-    networks:
-      - msp-network
-    restart: "no"
-
-  # Monitoring Service (Prometheus)
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: msp-intelligence-prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--storage.tsdb.retention.time=200h'
-      - '--web.enable-lifecycle'
-    networks:
-      - msp-network
-    restart: unless-stopped
-
-  # Grafana Dashboard
-  grafana:
-    image: grafana/grafana:latest
-    container_name: msp-intelligence-grafana
-    ports:
-      - "3001:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin123
-      - GF_USERS_ALLOW_SIGN_UP=false
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./docker/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
-      - ./docker/grafana/datasources:/etc/grafana/provisioning/datasources:ro
-    depends_on:
-      - prometheus
-    networks:
-      - msp-network
+      retries: 5
+      start_period: 20s
     restart: unless-stopped
 
 volumes:
-  redis_data:
+  models_cache:
     driver: local
-  mongodb_data:
-    driver: local
-  prometheus_data:
-    driver: local
-  grafana_data:
-    driver: local
-
-networks:
-  msp-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16

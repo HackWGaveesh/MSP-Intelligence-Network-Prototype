@@ -220,7 +220,7 @@
             
             try {
                 const startTime = Date.now();
-                const result = await MSP.apiCall('/client-health', {
+                const result = await MSP.apiCall('/client-health/predict', {
                     method: 'POST',
                     body: JSON.stringify({
                         client_id: clientId,
@@ -264,6 +264,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

@@ -193,7 +193,7 @@
             
             try {
                 const startTime = Date.now();
-                const result = await MSP.apiCall('/nlp-query', {
+                const result = await MSP.apiCall('/nlp-query/ask', {
                     method: 'POST',
                     body: JSON.stringify({ query: input })
                 });
@@ -238,6 +238,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

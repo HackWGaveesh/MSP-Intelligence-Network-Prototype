@@ -219,7 +219,7 @@
             
             try {
                 const startTime = Date.now();
-                const result = await MSP.apiCall('/anomaly', {
+                const result = await MSP.apiCall('/anomaly/detect', {
                     method: 'POST',
                     body: JSON.stringify({
                         metric_type: metricType,
@@ -260,6 +260,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

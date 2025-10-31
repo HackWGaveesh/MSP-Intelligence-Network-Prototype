@@ -242,3 +242,8 @@ aws apigateway create-rest-api --name msp-intelligence-api
 
 
 
+
+
+
+
+

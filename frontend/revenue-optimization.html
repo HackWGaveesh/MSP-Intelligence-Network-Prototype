@@ -229,7 +229,7 @@
             
             try {
                 const startTime = Date.now();
-                const result = await MSP.apiCall('/revenue', {
+                const result = await MSP.apiCall('/revenue/forecast', {
                     method: 'POST',
                     body: JSON.stringify({
                         period_days: parseInt(period),
@@ -271,6 +271,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

@@ -1,371 +1,171 @@
-# 🌐 MSP Intelligence Mesh Network
+# MSP Intelligence Mesh - Setup and Run Guide
 
-> **Revolutionary Multi-Agent AI System for Managed Service Providers**
+This document consolidates everything you need to install, start, verify, and troubleshoot the MSP Intelligence Mesh locally. It replaces the scattered README-style notes so you only have one place to look when preparing a demo or development environment.
 
-A production-ready AI-powered intelligence network that connects MSPs through federated learning, real-time threat detection, and collaborative intelligence sharing. Built for **Superhack 2025**.
+## Overview
+- Multi-agent FastAPI backend with real AI model integrations
+- React/TypeScript dashboard with live WebSocket updates
+- Optional Docker stack with monitoring (Grafana, Prometheus)
+- Helper scripts for one-command startup or manual control
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
-[![AI/ML](https://img.shields.io/badge/AI%2FML-7%2F10%20Agents-purple.svg)](https://github.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+## Prerequisites
+- Operating system: Linux, macOS, or Windows (WSL2 recommended)
+- Hardware: 8 GB RAM (16 GB recommended), 10 GB free disk, 4+ CPU cores
+- Internet access for one-time Python package and model downloads
 
----
+Tools required for each path:
+- Docker path: Docker 20.10+, Docker Compose 2+
+- Direct path: Python 3.10+, Node.js 18+, npm 9+, jq (optional for curl output)
 
-## 🎯 Overview
-
-The MSP Intelligence Mesh Network is a **multi-agent AI system** that creates exponential value through collective intelligence. When one MSP detects a threat, all members benefit instantly. When one discovers a market opportunity, the network shares insights. This is the future of MSP collaboration.
-
-### 🏆 Key Features
-
-- **🤖 7 Real AI/ML Agents** with production-grade models (DistilBERT, FLAN-T5, Isolation Forest, etc.)
-- **🔐 Federated Learning** with differential privacy (ε=0.1)
-- **⚡ Real-Time Intelligence** with WebSocket streaming
-- **📊 Advanced Analytics** for threats, revenue, clients, and anomalies
-- **🤝 Smart Collaboration** with AI-powered partner matching
-- **💬 Natural Language Interface** for conversational insights
-- **🎨 Professional UI/UX** with modern, responsive design
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.9+
-- 4GB RAM minimum
-- 2GB disk space (for AI models)
-
-### Installation
-
+Quick version checks:
 ```bash
-# Clone the repository
-git clone https://github.com/YOUR_USERNAME/msp-intelligence-mesh.git
+python3 --version
+node --version
+docker --version
+docker compose version
+```
+
+## Quick Start Options
+
+### Option A - Automated Docker stack (production-style)
+```bash
 cd msp-intelligence-mesh
+chmod +x start.sh
+./start.sh
+```
+What happens:
+- generates `.env` if missing and prepares data folders
+- builds and starts all Docker services (backend, frontend, monitoring, databases)
+- loads demo data and waits for health checks to pass
+- prints useful URLs and commands at the end
 
-# Create virtual environment
+Access once the script finishes:
+- Frontend dashboard: http://localhost:3000
+- Backend API: http://localhost:8000
+- API docs (OpenAPI): http://localhost:8000/docs
+- Grafana: http://localhost:3001 (admin/admin123)
+- Prometheus: http://localhost:9090
+
+Stop the stack when you are done:
+```bash
+docker compose down
+```
+
+### Option B - Direct mode without Docker (Python + Node)
+```bash
+cd msp-intelligence-mesh
+chmod +x run_without_docker.sh
+./run_without_docker.sh
+```
+What happens:
+- ensures Python and Node.js are present
+- creates/activates a virtual environment under `backend`
+- installs backend Python dependencies and frontend npm packages
+- generates lightweight demo data
+- starts FastAPI on port 8000 and React dev server on port 3000
+- tails logs to `logs/backend.log` and `logs/frontend.log`
+
+Stop direct mode with `Ctrl+C` in the same terminal or run `./stop_direct.sh`.
+
+## Manual Run Without Scripts
+
+### 1. Backend (FastAPI)
+```bash
+cd msp-intelligence-mesh/backend
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r backend/requirements_simple.txt
-
-# Download AI models (one-time, ~1.5GB)
-cd backend/models
-python download_models.py
-cd ../..
-
-# Start the application
-./start_app.sh
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements_minimal.txt
+cd api
+python3 main_simple.py
 ```
+Backend endpoints:
+- http://localhost:8000
+- http://localhost:8000/docs
+- http://localhost:8000/health
 
-### Access the Application
-
-- **Frontend**: http://localhost:8080
-- **API Docs**: http://localhost:8000/docs
-- **WebSocket**: ws://localhost:8000/ws
-
----
-
-## 🤖 AI Agents
-
-### ✅ **Real AI/ML Models (7/10)**
-
-| Agent | Model | Framework | Status |
-|-------|-------|-----------|--------|
-| **Threat Intelligence** | DistilBERT | PyTorch | ✅ Real AI |
-| **Market Intelligence** | DistilBERT Sentiment | PyTorch | ✅ Real AI |
-| **NLP Query** | FLAN-T5 + Context | PyTorch | ✅ Real AI |
-| **Collaboration** | Sentence-BERT | PyTorch | ✅ Real AI |
-| **Client Health** | Gradient Boosting | scikit-learn | ✅ Real ML |
-| **Revenue Forecasting** | Time-Series (Prophet-style) | numpy | ✅ Real ML |
-| **Anomaly Detection** | Isolation Forest | scikit-learn | ✅ Real ML |
-| Security Compliance | Rule-based | - | ⏳ Simulated |
-| Resource Allocation | Optimization | - | ⏳ Simulated |
-| Federated Learning | Coordinator | - | ⏳ Simulated |
-
----
-
-## 📊 Features
-
-### 🛡️ **Threat Intelligence**
-- Real-time threat detection using DistilBERT
-- Hybrid classification (AI + keywords)
-- Severity scoring and confidence levels
-- Threat type identification: Phishing, Ransomware, DDoS, Malware, etc.
-
-### 📈 **Revenue Optimization**
-- Time-series forecasting with trend + seasonality
-- Monthly revenue projections
-- Confidence intervals
-- Opportunity detection
-- Risk factor analysis
-
-### 👥 **Client Health Prediction**
-- 12-feature gradient boosting model
-- Churn risk prediction (0-100%)
-- Revenue at risk calculation
-- Feature importance analysis
-- Context-aware recommendations
-
-### 🔍 **Anomaly Detection**
-- Isolation Forest algorithm (100 trees)
-- 4-feature engineering per data point
-- Metric-specific patterns (CPU, Memory, Network, Disk)
-- Severity classification
-- Anomaly scoring and context
-
-### 💬 **NLP Query Agent**
-- Context-aware conversational AI
-- 12+ response categories
-- Hybrid intelligence (patterns + T5)
-- Dynamic data integration
-- Professional, varied responses
-
-### 🤝 **Collaboration Matching**
-- Semantic partner matching using Sentence-BERT
-- Cosine similarity scoring
-- Skill complementarity analysis
-- Real-time match scores
-
-### 💼 **Market Intelligence**
-- Sentiment analysis with 99%+ accuracy
-- Market trend detection
-- Pricing recommendations
-- Competitive analysis
-
----
-
-## 🎨 User Interface
-
-### **Main Dashboard**
-- Live network status
-- Agent health monitoring
-- Real-time metrics
-- Quick actions
-
-### **10 Individual Agent Pages**
-1. Threat Intelligence
-2. Market Intelligence
-3. NLP Query (Chatbot)
-4. Collaboration Matching
-5. Client Health Prediction
-6. Revenue Optimization
-7. Anomaly Detection
-8. Security Compliance
-9. Resource Allocation
-10. Federated Learning
-
-### **Multi-Agent Workflow Demo**
-- 5 pre-built scenarios
-- Step-by-step agent execution
-- Real API calls with live data
-- Comprehensive final summaries
-
----
-
-## 🏗️ Architecture
-
-```
-msp-intelligence-mesh/
-├── backend/
-│   ├── agents/              # 10 AI agents
-│   ├── models/
-│   │   └── pretrained/      # Cached AI models (~1.5GB)
-│   ├── api/                 # FastAPI endpoints
-│   ├── services/            # AWS, DB, Vector services
-│   └── utils/               # Helpers, encryption
-├── frontend/
-│   ├── index.html           # Main dashboard
-│   ├── workflow-demo.html   # Multi-agent workflows
-│   ├── [agent].html         # 10 individual agent pages
-│   ├── styles.css           # Modern UI styling
-│   └── app.js               # Frontend logic
-├── logs/                    # Application logs
-├── tests/                   # Unit & integration tests
-└── docs/                    # Documentation
-```
-
----
-
-## 🔬 Technology Stack
-
-### **Backend**
-- **Framework**: FastAPI (async Python)
-- **AI/ML**: PyTorch, HuggingFace Transformers, scikit-learn
-- **Database**: MongoDB Atlas, Redis, Pinecone
-- **Real-time**: WebSockets
-- **Cloud**: AWS (Lambda, S3, Kinesis, SageMaker)
-
-### **Frontend**
-- **Core**: HTML5, CSS3, Vanilla JavaScript
-- **Styling**: Modern gradient designs, responsive layouts
-- **Charts**: Chart.js
-- **Real-time**: WebSocket client
-
-### **AI Models**
-- **DistilBERT** (66M params) - Threat & Sentiment
-- **FLAN-T5-Small** (60M params) - NLP
-- **Sentence-BERT** (110M params) - Embeddings
-- **Gradient Boosting** - Classification
-- **Isolation Forest** - Anomaly Detection
-- **Time-Series** - Forecasting
-
----
-
-## 📈 Performance
-
-- **Model Loading**: ~8 seconds (one-time)
-- **Inference Speed**: 20-100ms average
-- **Threat Detection**: 94-98% accuracy
-- **Churn Prediction**: 87-94% accuracy
-- **Anomaly Detection**: 85-95% true positive rate
-- **Revenue Forecast**: 75-95% confidence
-
----
-
-## 🔐 Security & Privacy
-
-- **Differential Privacy**: ε=0.1 for federated learning
-- **Homomorphic Encryption**: Simulated for data processing
-- **Zero-Knowledge Proofs**: Conceptual implementation
-- **Secure Multi-Party Computation**: Federated aggregation
-- **CORS**: Configured for secure API access
-
----
-
-## 📝 API Documentation
-
-### **Key Endpoints**
-
+### 2. Frontend (React dashboard)
 ```bash
-# Threat Intelligence
-POST /threat-intelligence/analyze
-{
-  "text": "Suspicious phishing email detected"
-}
-
-# Client Health
-POST /client-health/predict
-{
-  "client_id": "CLIENT_001",
-  "ticket_volume": 65,
-  "resolution_time": 48,
-  "satisfaction_score": 4
-}
-
-# Revenue Forecasting
-POST /revenue/forecast
-{
-  "current_revenue": 500000,
-  "period_days": 180
-}
-
-# Anomaly Detection
-POST /anomaly/detect
-{
-  "metric_type": "CPU Usage",
-  "time_range_hours": 24
-}
-
-# NLP Query
-POST /nlp-query/ask
-{
-  "query": "What is the current network intelligence level?"
-}
-
-# Collaboration
-POST /collaboration/match
-{
-  "requirements": "Cloud migration expertise needed"
-}
+cd msp-intelligence-mesh/frontend
+npm install
+npm start
 ```
+React dev server runs at http://localhost:3000. Set `API_BASE_URL` in `.env` if you need a non-default backend address.
 
-Full API documentation: http://localhost:8000/docs
-
----
-
-## 🧪 Testing
-
+### 3. Lightweight static preview (optional)
+If you only need the static HTML pages for a quick demo:
 ```bash
-# Run all tests
-pytest tests/
+cd msp-intelligence-mesh/frontend
+python3 -m http.server 8080
+```
+Open http://localhost:8080. API calls still route to http://localhost:8000, so keep the backend running separately.
 
-# Run with coverage
-pytest --cov=backend tests/
+## Real AI Model Download (one-time)
+```bash
+cd msp-intelligence-mesh/backend/models
+python3 download_models.py
+```
+Rerun this step if the backend logs say that models could not be loaded (it will fall back to simulated responses otherwise).
 
-# Test specific agent
-pytest tests/test_agents.py::test_threat_intelligence
+## Smoke Tests
+
+### REST endpoints (requires backend running)
+```bash
+curl -sX POST http://localhost:8000/threat-intelligence/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Suspected ransomware encrypting files with bitcoin ransom note"}' | jq .
+
+curl -sX POST http://localhost:8000/market-intelligence/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"query":"MSP pricing trends in SMB cybersecurity","industry_segment":"security"}' | jq .
+
+curl -sX POST http://localhost:8000/nlp-query/ask \
+  -H "Content-Type: application/json" \
+  -d '{"query":"What is the current network intelligence level?"}' | jq .
+
+curl -sX POST http://localhost:8000/collaboration/match \
+  -H "Content-Type: application/json" \
+  -d '{"requirements":"Cloud migration expertise with Azure security experience"}' | jq .
+
+curl -sX POST http://localhost:8000/client-health/predict \
+  -H "Content-Type: application/json" \
+  -d '{"client_id":"C001","ticket_volume":65,"resolution_time":48,"satisfaction_score":4}' | jq .
+
+curl -sX POST http://localhost:8000/anomaly/detect \
+  -H "Content-Type: application/json" \
+  -d '{"metric_type":"CPU Usage","time_range_hours":4,"values":[32,35,38,80,92,45,41,39,37,36,85,93,40,38,37,36,35,34,33,32,31]}' | jq .
+
+curl -sX POST http://localhost:8000/compliance/check \
+  -H "Content-Type: application/json" \
+  -d '{"framework":"SOC2","policy_text":"MFA enforced. Data encrypted at rest and in transit. Quarterly audits and incident response defined."}' | jq .
+
+curl -sX POST http://localhost:8000/revenue/forecast \
+  -H "Content-Type: application/json" \
+  -d '{"current_revenue":500000,"period_days":180}' | jq .
 ```
 
----
+### WebSocket check
+```bash
+wscat -c ws://localhost:8000/ws
+> {"type":"ping"}
+```
 
-## 📚 Documentation
+### Postman import
+- Postman: Import -> Link -> `http://localhost:8000/openapi.json`
 
-- **[REAL_AI_SUMMARY.md](REAL_AI_SUMMARY.md)** - Complete AI/ML implementation details
-- **[CLIENT_HEALTH_ML_STATUS.md](CLIENT_HEALTH_ML_STATUS.md)** - Client health model docs
-- **[REVENUE_FORECASTING_ML_STATUS.md](REVENUE_FORECASTING_ML_STATUS.md)** - Revenue model docs
-- **[ANOMALY_DETECTION_ML_STATUS.md](ANOMALY_DETECTION_ML_STATUS.md)** - Anomaly detection docs
-- **[NLP_CHATBOT_FEATURES.md](NLP_CHATBOT_FEATURES.md)** - NLP agent capabilities
+## Testing and Utilities
+- Backend tests in Docker: `docker compose exec backend pytest tests -v`
+- Backend tests without Docker: `cd backend && source venv/bin/activate && pytest tests -v`
+- Frontend tests (Docker): `docker compose exec frontend npm test`
+- Frontend tests (Direct): `cd frontend && npm test`
+- Real AI validation script: `./test_real_ai.sh`
 
----
+## Troubleshooting
+- 422 errors: ensure `Content-Type: application/json` and send valid JSON bodies.
+- Backend falls back to simulated models: rerun `backend/models/download_models.py` and restart the API.
+- Port in use (3000/8000/etc): find and kill the process with `lsof -Pi :PORT -sTCP:LISTEN` or adjust the port in `.env` and React config.
+- Docker resources low: run `docker compose down -v` and `docker system prune -f` before rebuilding.
+- Logs: `docker compose logs -f`, `tail -f logs/backend.log`, `tail -f logs/frontend.log`.
 
-## 🎯 Use Cases
-
-1. **🚨 Threat Response**: Multi-agent security incident response
-2. **📈 Client Expansion**: Growth strategy with retention + revenue
-3. **🌐 Network Optimization**: Full intelligence mesh coordination
-4. **📊 Client Retention**: Churn prediction + intervention planning
-5. **💰 Revenue Growth**: Forecasting + opportunity identification
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🏆 Acknowledgments
-
-- **Superhack 2025** - Competition organizers
-- **HuggingFace** - Pretrained AI models
-- **FastAPI** - Modern Python web framework
-- **scikit-learn** - Machine learning library
-- **PyTorch** - Deep learning framework
-
----
-
-## 📞 Contact
-
-- **Project Lead**: Your Name
-- **Email**: your.email@example.com
-- **Demo**: http://localhost:8080
-- **Issues**: https://github.com/YOUR_USERNAME/msp-intelligence-mesh/issues
-
----
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=YOUR_USERNAME/msp-intelligence-mesh&type=Date)](https://star-history.com/#YOUR_USERNAME/msp-intelligence-mesh&Date)
-
----
-
-## 📊 Project Status
-
-🟢 **Active Development** | ✅ **7/10 Real AI Agents** | 🚀 **Production Ready**
-
----
-
-**Built with ❤️ for MSPs by the community**
+## Repository
+- https://github.com/HackWGaveesh/MSP-Intelligence-Network-Prototype.git

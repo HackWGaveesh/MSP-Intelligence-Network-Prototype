@@ -1,6 +1,6 @@
 // MSP Intelligence Mesh Network - Shared JavaScript
 
-const API_BASE_URL = 'https://mojoawwjv2.execute-api.us-east-1.amazonaws.com/prod';
+const API_BASE_URL = 'http://localhost:8000';
 
 // Create global MSP namespace
 window.MSP = window.MSP || {};
@@ -38,22 +38,33 @@ MSP.showAlert = (message, type = 'info') => {
 // API Functions
 MSP.apiCall = async (endpoint, options = {}) => {
     try {
-        const url = `${API_BASE_URL}${endpoint}`;
+        let url = `${API_BASE_URL}${endpoint}`;
+        if (!options.method || options.method.toUpperCase() === 'GET') {
+            const sep = url.includes('?') ? '&' : '?';
+            url = `${url}${sep}_=${Date.now()}`;
+        }
         console.log('API Call:', url);
-        
-        const response = await fetch(url, {
+
+        const fetchOptions = {
+            method: options.method || 'GET',
             mode: 'cors',
+            cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
                 ...options.headers
             },
             ...options
-        });
-        
+        };
+
+        const response = await fetch(url, fetchOptions);
+
         if (!response.ok) {
+            const text = await response.text();
+            console.error('API Error Response:', response.status, text);
             throw new Error(`API Error: ${response.status} ${response.statusText}`);
         }
-        
+
         const data = await response.json();
         console.log('API Response:', data);
         return data;

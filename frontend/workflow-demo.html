@@ -175,37 +175,37 @@
             'threat-response': {
                 title: '🛡️ Threat Response Workflow',
                 steps: [
-                    { agent: 'Threat Intelligence', icon: '🛡️', action: 'Detecting ransomware attack...', endpoint: '/threat-intelligence', data: { text: 'Suspicious file encryption activity detected across multiple endpoints' } },
-                    { agent: 'Anomaly Detection', icon: '🔍', action: 'Analyzing system anomalies...', endpoint: '/anomaly', data: { metric_type: 'system', time_range_hours: 24 } },
-                    { agent: 'Client Health', icon: '📊', action: 'Assessing client impact...', endpoint: '/client-health', data: { client_id: 'CLIENT_001', ticket_volume: 25, resolution_time: 48, satisfaction_score: 5 } },
-                    { agent: 'Collaboration', icon: '🤝', action: 'Finding security partners...', endpoint: '/collaboration', data: { requirements: 'Need SOC2 certified partner for incident response' } },
+                    { agent: 'Threat Intelligence', icon: '🛡️', action: 'Detecting ransomware attack...', endpoint: '/threat-intelligence/analyze', data: { text: 'Suspicious file encryption activity detected across multiple endpoints' } },
+                    { agent: 'Anomaly Detection', icon: '🔍', action: 'Analyzing system anomalies...', endpoint: '/anomaly/detect', data: { metric_type: 'system', time_range_hours: 24 } },
+                    { agent: 'Client Health', icon: '📊', action: 'Assessing client impact...', endpoint: '/client-health/predict', data: { client_id: 'CLIENT_001', ticket_volume: 25, resolution_time: 48, satisfaction_score: 5 } },
+                    { agent: 'Collaboration', icon: '🤝', action: 'Finding security partners...', endpoint: '/collaboration/match', data: { requirements: 'Need SOC2 certified partner for incident response' } },
                     { agent: 'Resource Allocation', icon: '📅', action: 'Allocating response team...', endpoint: '/resource/optimize', data: { task_count: 10, technician_count: 3, time_window_hours: 4, priority_mode: 'speed' } },
-                    { agent: 'Compliance', icon: '✅', action: 'Checking compliance requirements...', endpoint: '/compliance', data: { framework: 'soc2', policy_text: 'Incident response procedure' } },
+                    { agent: 'Compliance', icon: '✅', action: 'Checking compliance requirements...', endpoint: '/compliance/check', data: { framework: 'soc2', policy_text: 'Incident response procedure' } },
                 ]
             },
             'client-retention': {
                 title: '📊 Client Retention Workflow',
                 steps: [
-                    { agent: 'Client Health', icon: '📊', action: 'Predicting churn risk...', endpoint: '/client-health', data: { client_id: 'CLIENT_002', ticket_volume: 20, resolution_time: 36, satisfaction_score: 6 } },
-                    { agent: 'Revenue Optimization', icon: '💰', action: 'Identifying upsell opportunities...', endpoint: '/revenue', data: { period_days: 90, current_revenue: 250000 } },
-                    { agent: 'Market Intelligence', icon: '💼', action: 'Analyzing market positioning...', endpoint: '/market-intelligence', data: { query: 'Client retention strategies in MSP market' } },
+                    { agent: 'Client Health', icon: '📊', action: 'Predicting churn risk...', endpoint: '/client-health/predict', data: { client_id: 'CLIENT_002', ticket_volume: 20, resolution_time: 36, satisfaction_score: 6 } },
+                    { agent: 'Revenue Optimization', icon: '💰', action: 'Identifying upsell opportunities...', endpoint: '/revenue/forecast', data: { period_days: 90, current_revenue: 250000 } },
+                    { agent: 'Market Intelligence', icon: '💼', action: 'Analyzing market positioning...', endpoint: '/market-intelligence/analyze', data: { query: 'Client retention strategies in MSP market' } },
                     { agent: 'Resource Allocation', icon: '📅', action: 'Scheduling client review...', endpoint: '/resource/optimize', data: { task_count: 5, technician_count: 2, time_window_hours: 8, priority_mode: 'quality' } },
-                    { agent: 'NLP Query', icon: '💬', action: 'Generating action plan...', endpoint: '/nlp-query', data: { query: 'What are the best retention strategies for at-risk clients?' } }
+                    { agent: 'NLP Query', icon: '💬', action: 'Generating action plan...', endpoint: '/nlp-query/ask', data: { query: 'What are the best retention strategies for at-risk clients?' } }
                 ]
             },
             'full-intelligence': {
                 title: '🌟 Full Intelligence Mesh Workflow',
                 steps: [
-                    { agent: 'Threat Intelligence', icon: '🛡️', action: 'Scanning for threats...', endpoint: '/threat-intelligence', data: { text: 'System security audit' } },
-                    { agent: 'Market Intelligence', icon: '💼', action: 'Analyzing market trends...', endpoint: '/market-intelligence', data: { query: 'MSP industry trends Q4 2025' } },
-                    { agent: 'NLP Query', icon: '💬', action: 'Processing natural language queries...', endpoint: '/nlp-query', data: { query: 'What is our network intelligence level?' } },
-                    { agent: 'Collaboration', icon: '🤝', action: 'Matching partnership opportunities...', endpoint: '/collaboration', data: { requirements: 'Cloud migration expertise needed' } },
-                    { agent: 'Client Health', icon: '📊', action: 'Evaluating client health scores...', endpoint: '/client-health', data: { client_id: 'CLIENT_ALL', ticket_volume: 15, resolution_time: 24, satisfaction_score: 8 } },
-                    { agent: 'Revenue Optimization', icon: '💰', action: 'Forecasting revenue growth...', endpoint: '/revenue', data: { period_days: 90, current_revenue: 250000 } },
-                    { agent: 'Anomaly Detection', icon: '🔍', action: 'Monitoring for anomalies...', endpoint: '/anomaly', data: { metric_type: 'network', time_range_hours: 168 } },
-                    { agent: 'Compliance', icon: '✅', action: 'Checking compliance status...', endpoint: '/compliance', data: { framework: 'iso27001', policy_text: 'Security compliance audit' } },
+                    { agent: 'Threat Intelligence', icon: '🛡️', action: 'Scanning for threats...', endpoint: '/threat-intelligence/analyze', data: { text: 'System security audit' } },
+                    { agent: 'Market Intelligence', icon: '💼', action: 'Analyzing market trends...', endpoint: '/market-intelligence/analyze', data: { query: 'MSP industry trends Q4 2025' } },
+                    { agent: 'NLP Query', icon: '💬', action: 'Processing natural language queries...', endpoint: '/nlp-query/ask', data: { query: 'What is our network intelligence level?' } },
+                    { agent: 'Collaboration', icon: '🤝', action: 'Matching partnership opportunities...', endpoint: '/collaboration/match', data: { requirements: 'Cloud migration expertise needed' } },
+                    { agent: 'Client Health', icon: '📊', action: 'Evaluating client health scores...', endpoint: '/client-health/predict', data: { client_id: 'CLIENT_ALL', ticket_volume: 15, resolution_time: 24, satisfaction_score: 8 } },
+                    { agent: 'Revenue Optimization', icon: '💰', action: 'Forecasting revenue growth...', endpoint: '/revenue/forecast', data: { period_days: 90, current_revenue: 250000 } },
+                    { agent: 'Anomaly Detection', icon: '🔍', action: 'Monitoring for anomalies...', endpoint: '/anomaly/detect', data: { metric_type: 'network', time_range_hours: 168 } },
+                    { agent: 'Compliance', icon: '✅', action: 'Checking compliance status...', endpoint: '/compliance/check', data: { framework: 'iso27001', policy_text: 'Security compliance audit' } },
                     { agent: 'Resource Allocation', icon: '📅', action: 'Optimizing resource allocation...', endpoint: '/resource/optimize', data: { task_count: 20, technician_count: 8, time_window_hours: 8, priority_mode: 'balanced' } },
-                    { agent: 'Federated Learning', icon: '🌐', action: 'Updating global models...', endpoint: '/federated', data: { model_type: 'threat', participating_msps: 100, privacy_epsilon: 0.1 } }
+                    { agent: 'Federated Learning', icon: '🌐', action: 'Updating global models...', endpoint: '/federated/train', data: { model_type: 'threat', participating_msps: 100, privacy_epsilon: 0.1 } }
                 ]
             }
         };

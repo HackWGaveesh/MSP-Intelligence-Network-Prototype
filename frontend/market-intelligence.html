@@ -232,7 +232,7 @@
             
             try {
                 const startTime = Date.now();
-                const result = await MSP.apiCall('/market-intelligence', {
+                const result = await MSP.apiCall('/market-intelligence/analyze', {
                     method: 'POST',
                     body: JSON.stringify({ query: input })
                 });
@@ -270,6 +270,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

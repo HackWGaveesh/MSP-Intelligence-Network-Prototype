@@ -263,7 +263,7 @@
             
             try {
                 const startTime = Date.now();
-                const result = await MSP.apiCall('/compliance', {
+                const result = await MSP.apiCall('/compliance/check', {
                     method: 'POST',
                     body: JSON.stringify({
                         framework: framework,
@@ -306,6 +306,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
